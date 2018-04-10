@@ -15,7 +15,7 @@ public class OpcodeReader implements Iterable<Integer>{
     public OpcodeReader(String filename) {
         opcodes = null;
         try {
-            opcodes = new FileReader("input.txt");
+            opcodes = new FileReader(filename);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -41,7 +41,7 @@ public class OpcodeReader implements Iterable<Integer>{
 
         @Override
         public boolean hasNext() {
-            return true;
+            return false;
         }
 
         @Override

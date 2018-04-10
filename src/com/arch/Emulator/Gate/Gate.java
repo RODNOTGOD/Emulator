@@ -3,7 +3,7 @@ package com.arch.Emulator.Gate;
 import java.util.Vector;
 
 public interface Gate {
-    int transmit();
+    int[] transmit();
     void loadArguments(int[] inputs);
-    int calculate();
+    int[] calculate();
 }

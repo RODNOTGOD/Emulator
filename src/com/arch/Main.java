@@ -1,17 +1,15 @@
 package com.arch;
 
 import com.arch.Emulator.Enumlator;
+import com.arch.Emulator.Gate.Decoder;
 import com.arch.Emulator.OpcodeReader;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
 
 public class Main {
 
     public static void main(String[] args) {
 
         Enumlator enumlator = new Enumlator();
-        OpcodeReader reader = new OpcodeReader(args[1]);
+        OpcodeReader reader = new OpcodeReader("input.txt");
 
         /*
          * This section here we are going to read the hex/opcodes into the decoder
@@ -20,7 +18,6 @@ public class Main {
         for (int opcode : reader) {
             enumlator.read(opcode);
         }
-
     }
 
 }

@@ -2,19 +2,17 @@ package com.arch.Emulator.Gate;
 
 public class And implements Gate {
 
-    private int[] inputs;
+    private  int[] inputs;
     private int[] output;
-    private int result;
 
-    public And(int inputs, int outputs) {
-        this.inputs = new int[inputs];
-        this.output = new int[outputs];
-        result = 0;
+    public And(int numOfInputs, int numOfOutputs) {
+        this.inputs = new int[numOfInputs];
+        this.output = new int[numOfOutputs];
     }
 
     @Override
-    public int transmit() {
-        return result;
+    public int[] transmit() {
+        return output;
     }
 
     @Override
@@ -25,10 +23,10 @@ public class And implements Gate {
     }
 
     @Override
-    public int calculate() {
-        result = inputs[0];
+    public int[] calculate() {
+        output[0] = 0xFFFFFFFF;
         for (int bit : inputs)
-            result &= bit;
-        return result;
+            output[0] &= bit;
+        return output;
     }
 }

@@ -13,8 +13,8 @@ public class Not implements Gate {
     }
 
     @Override
-    public int transmit() {
-        return result;
+    public int[] transmit() {
+        return output;
     }
 
     @Override
@@ -27,11 +27,11 @@ public class Not implements Gate {
     @Override
     // mask should fix the ~ bitwise not operator only converting
     // 32 bit. Will test some more.
-    public int calculate() {
-        result = inputs[0];
+    public int[] calculate() {
+        output[0] = inputs[0];
         int mask = 0x0000000f;
         for (int bit : inputs)
-            result = (~bit) & mask;
-        return result;
+            output[0] = (~bit) & mask;
+        return output;
     }
 }

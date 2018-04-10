@@ -7,8 +7,8 @@ public class Or implements Gate {
     private int result;
 
     @Override
-    public int transmit() {
-        return 0;
+    public int[] transmit() {
+        return output;
     }
 
     @Override
@@ -17,7 +17,7 @@ public class Or implements Gate {
     }
 
     @Override
-    public int calculate() {
-        return 0;
+    public int[] calculate() {
+        return output;
     }
 }

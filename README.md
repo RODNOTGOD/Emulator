@@ -8,9 +8,9 @@
   all the parts with each other i.e. wires or just pass into other functions
 
   - [ ] Decoder
-  - [ ] NOT
-  - [ ] AND
-  - [ ] OR
+  - [X] NOT
+  - [X] AND
+  - [X] OR
   - [ ] XOR
 
 ### Week 2 ###
