@@ -1,13 +1,21 @@
 package com.arch.Emulator;
 
-public class Enumlator {
+import com.arch.Emulator.Gate.Decoder;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+
+import java.util.Arrays;
+
+public class Emulator {
+
+    private Decoder instructionDecoder;
 
     /*
      * private Memory memory
      * private ControlLine controller;
      */
 
-    public Enumlator () {
+    public Emulator() {
+        instructionDecoder = new Decoder(8);
         /*
          * memory = new MemoryAllocator(AmountOfMemory);
          * controller = new ControlLine();
@@ -51,5 +59,18 @@ public class Enumlator {
          *      Probably should move to a loaded array with the opcodes. This Would allow easier travel
          *      back of instructions
          */
+        int instruction = (opcode & 0xFFFF) >> 8;
+        int[] array = new int[8];
+        for (int i = array.length - 1; i >= 0; i--) {
+            array[i] = instruction % 2;
+            instruction /= 2;
+        }
+        instructionDecoder.loadArguments(array);
+        System.out.println(Arrays.toString(instructionDecoder.calculate()));
+        int[] result = instructionDecoder.transmit();
+        for (int i = result.length - 1; i >= 0; i--) {
+            if (result[i] == 1)
+                System.out.println(i);
+        }
     }
 }

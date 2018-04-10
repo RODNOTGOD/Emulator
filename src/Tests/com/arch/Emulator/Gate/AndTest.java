@@ -14,7 +14,7 @@ public class AndTest {
     public void testTrue() {
         int[] input = {1, 1, 1, 1};
         int[] expected = {1};
-        testAndGate = new And(input.length, 1);
+        testAndGate = new And(input.length);
         testAndGate.loadArguments(input);
         assertArrayEquals(expected, testAndGate.calculate());
     }
@@ -28,7 +28,7 @@ public class AndTest {
             randomArray[0] = 0;
             for (int i = 1; i < randomArray.length; i++)
                 randomArray[i] = random.nextInt(9) + 1;
-            testAndGate = new And(randomArray.length, 1);
+            testAndGate = new And(randomArray.length);
             testAndGate.loadArguments(randomArray);
             assertArrayEquals(unexpected, testAndGate.calculate());
         }

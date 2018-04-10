@@ -1,13 +1,13 @@
 package com.arch;
 
-import com.arch.Emulator.Enumlator;
+import com.arch.Emulator.Emulator;
 import com.arch.Emulator.OpcodeReader;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Enumlator enumlator = new Enumlator();
+        Emulator emulator = new Emulator();
         OpcodeReader reader = new OpcodeReader("input.txt");
 
         /*
@@ -15,9 +15,8 @@ public class Main {
          * We will just read a string and just read into a integer and pass it to the decoder
          */
         for (int opcode : reader) {
-            enumlator.read(opcode);
+            emulator.read(opcode);
         }
-
     }
 
 }

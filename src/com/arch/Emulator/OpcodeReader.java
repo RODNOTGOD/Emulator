@@ -21,10 +21,6 @@ public class OpcodeReader implements Iterable<Integer>{
         }
     }
 
-    private static boolean isComment(String line) {
-        return !(line != null && line.matches("[-+]?\\d*\\.?\\d+"));
-    }
-
     @Override
     public Iterator<Integer> iterator() {
         return new OpcodeIterator(opcodes);
@@ -34,6 +30,7 @@ public class OpcodeReader implements Iterable<Integer>{
 
         private BufferedReader reader = null;
         private String line = null;
+        private Integer opcode;
 
         public OpcodeIterator (FileReader opcodes) {
             reader = new BufferedReader(opcodes);
@@ -41,18 +38,25 @@ public class OpcodeReader implements Iterable<Integer>{
 
         @Override
         public boolean hasNext() {
-            return false;
+            try {
+                line = reader.readLine();
+                if (isComment(line))
+                    line = null;
+                return line != null;
+            } catch (IOException e) {
+                return false;
+            }
         }
 
         @Override
         public Integer next() {
-            try {
-                line = reader.readLine();
-                return Integer.parseInt(line);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
+            opcode = Integer.parseInt(line, 16);
+            return opcode;
         }
+
+        private boolean isComment(String line) {
+            return !(line != null && line.matches("[-e]?\\d*\\.?\\d+"));
+        }
+
     }
 }

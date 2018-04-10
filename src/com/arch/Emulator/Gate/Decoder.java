@@ -2,39 +2,13 @@ package com.arch.Emulator.Gate;
 
 import java.util.Arrays;
 
-public class Decoder implements Gate {
+public class Decoder extends Gate {
 
     private final int NORMAL = 0;
     private final int INVERTED = 1;
 
-    private int[] inputs = null;
-    private int[] outputs = null;
-
-    public Decoder(int numOfInputs, int numOfOutputs) {
-        int realInputs = (int) Math.floor(Math.log(numOfOutputs) / Math.log(2));
-
-        if (realInputs != numOfInputs) {
-            throw new IllegalArgumentException("Wrong amount of inputs/outputs: need "
-                    + numOfInputs + " inputs with "
-                    + (int) Math.pow(2, numOfInputs) + " outputs or "
-                    + realInputs + " inputs with " + numOfOutputs + " outputs");
-        }
-
-        inputs = new int[numOfInputs];
-        outputs = new int[numOfOutputs];
-    }
-
-    @Override
-    public int[] transmit() {
-        return outputs;
-    }
-
-    @Override
-    public void loadArguments(int[] inputs) {
-        assert inputs != null;
-        if (inputs.length != this.inputs.length)
-            throw new IllegalArgumentException("Not matching arguments");
-        System.arraycopy(inputs, 0, this.inputs, 0, inputs.length);
+    public Decoder(int numOfInputs) {
+        super(numOfInputs, (int) Math.pow(2, numOfInputs));
     }
 
     @Override
@@ -43,7 +17,7 @@ public class Decoder implements Gate {
         assert inputs != null;
         assert outputs != null;
 
-        And andGate = new And(inputs.length, 1);
+        And andGate = new And(inputs.length);
         int[][] sets = new int[inputs.length][2];
         int marker = sets.length - 1;
 
@@ -55,7 +29,7 @@ public class Decoder implements Gate {
         for (int i = 0; i < outputs.length; i++) {
             int[] createdInput = new int[inputs.length];
             for (int j = 0; j < sets.length; j++)
-                createdInput[j] = sets[j][0];
+                createdInput[j] = 0x1 & sets[j][0];
 
             andGate.loadArguments(createdInput);
             outputs[i] = andGate.calculate()[0];
@@ -68,12 +42,12 @@ public class Decoder implements Gate {
                 }
             }
 
-            sets[marker][0] = ~sets[marker][0];
+            sets[marker][0] = 0x1 & ~sets[marker][0];
             sets[marker][1] = INVERTED;
 
             // Flip all previous bits
             for (int j = marker + 1; j < sets.length; j++) {
-                sets[j][0] = ~sets[j][0];
+                sets[j][0] = 0x1 & ~sets[j][0];
                 sets[j][1] = NORMAL;
             }
         }
