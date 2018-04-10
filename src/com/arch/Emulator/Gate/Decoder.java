@@ -4,6 +4,9 @@ import java.util.Arrays;
 
 public class Decoder implements Gate {
 
+    private final int NORMAL = 0;
+    private final int INVERTED = 1;
+
     private int[] inputs = null;
     private int[] outputs = null;
 
@@ -40,17 +43,39 @@ public class Decoder implements Gate {
         assert inputs != null;
         assert outputs != null;
 
-        int[] sets = inputs.clone();
-        int marker = sets.length - 1;
         And andGate = new And(inputs.length, 1);
+        int[][] sets = new int[inputs.length][2];
+        int marker = sets.length - 1;
+
+        for (int i = 0; i < sets.length; i++) {
+            sets[i][0] = inputs[i];
+            sets[i][1] = NORMAL;
+        }
 
         for (int i = 0; i < outputs.length; i++) {
-            andGate.loadArguments(sets);
+            int[] createdInput = new int[inputs.length];
+            for (int j = 0; j < sets.length; j++)
+                createdInput[j] = sets[j][0];
+
+            andGate.loadArguments(createdInput);
             outputs[i] = andGate.calculate()[0];
-            sets[marker] = ~sets[marker];
-            for (int j = marker + 1; j < sets.length; j++)
-                sets[j] = ~sets[j];
-            marker--;
+
+            // Find next flippable area
+            for (int j = sets.length - 1; j >= 0; j--) {
+                if (sets[j][1] == NORMAL) {
+                    marker = j;
+                    break;
+                }
+            }
+
+            sets[marker][0] = ~sets[marker][0];
+            sets[marker][1] = INVERTED;
+
+            // Flip all previous bits
+            for (int j = marker + 1; j < sets.length; j++) {
+                sets[j][0] = ~sets[j][0];
+                sets[j][1] = NORMAL;
+            }
         }
 
         return outputs;

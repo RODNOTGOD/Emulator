@@ -1,7 +1,6 @@
 package com.arch;
 
 import com.arch.Emulator.Enumlator;
-import com.arch.Emulator.Gate.Decoder;
 import com.arch.Emulator.OpcodeReader;
 
 public class Main {
@@ -18,6 +17,7 @@ public class Main {
         for (int opcode : reader) {
             enumlator.read(opcode);
         }
+
     }
 
 }
