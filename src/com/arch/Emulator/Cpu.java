@@ -1,23 +1,20 @@
 package com.arch.Emulator;
 
-import com.arch.Emulator.Gate.Decoder;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
-import java.util.Arrays;
+public class Cpu {
 
-public class Emulator {
+    private Memory memory;
 
-    private Decoder instructionDecoder;
+    private int instructionPointer;
 
     /*
      * private Memory memory
      * private ControlLine controller;
      */
 
-    public Emulator() {
-        instructionDecoder = new Decoder(8);
+    public Cpu() {
         /*
-         * memory = new MemoryAllocator(AmountOfMemory);
          * controller = new ControlLine();
          */
         startup();
@@ -39,10 +36,11 @@ public class Emulator {
          *      Need to load all memory first and select a section of EPROM to read into.
          *      This section is just a random hex location in the EPROM section of the memory
          */
-        for (int i = 0; i < 100; i++);
+        for (int i = 0; i < 100; i++); // no-op
+        memory = new Memory();
     }
 
-    public void read(int opcode) {
+    public void run() {
         /*
          * Plan:
          *      Read each instruction give to decoder to set all control lines. This just push data through
@@ -59,18 +57,33 @@ public class Emulator {
          *      Probably should move to a loaded array with the opcodes. This Would allow easier travel
          *      back of instructions
          */
-        int instruction = (opcode & 0xFFFF) >> 8;
-        int[] array = new int[8];
-        for (int i = array.length - 1; i >= 0; i--) {
-            array[i] = instruction % 2;
-            instruction /= 2;
+        instructionPointer = 0x4000; // Default starting location
+        while (instructionPointer != memory.getEndOfProgram()) {
+            int opcodes = readMemory();
+            System.out.println("Instruction read: " + Integer.toHexString(opcodes));
         }
-        instructionDecoder.loadArguments(array);
-        System.out.println(Arrays.toString(instructionDecoder.calculate()));
-        int[] result = instructionDecoder.transmit();
-        for (int i = result.length - 1; i >= 0; i--) {
-            if (result[i] == 1)
-                System.out.println(i);
+    }
+
+    private int readMemory() {
+        int opcodes = 0;
+        for (int i = 0; i < 4; i++) { // read four bytes from ram
+            opcodes |= memory.fetch(instructionPointer++);
+            opcodes <<= 8;
         }
+        return opcodes;
+    }
+
+    private void loadInstruction(int instruction) {
+        switch (instruction) {
+            case 0x80:
+                System.out.println("Moving 2 8-bit register");
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown instruction " + Integer.toHexString(instruction) + " passed");
+        }
+    }
+
+    public Memory getMemory() {
+        return memory;
     }
 }

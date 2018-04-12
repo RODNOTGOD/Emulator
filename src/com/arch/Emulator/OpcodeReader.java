@@ -3,9 +3,10 @@ package com.arch.Emulator;
 import java.io.*;
 import java.util.Iterator;
 
-public class OpcodeReader implements Iterable<Integer>{
+public class OpcodeReader {
 
-    FileReader opcodes = null;
+    private FileReader opcodes = null;
+    private Memory prgMemory = null;
 
     /**
      * Reads a file containing opcodes/comments for the emulator
@@ -21,42 +22,16 @@ public class OpcodeReader implements Iterable<Integer>{
         }
     }
 
-    @Override
-    public Iterator<Integer> iterator() {
-        return new OpcodeIterator(opcodes);
+    public void loadMemory(Memory memory) {
+        this.prgMemory = memory;
     }
 
-    private class OpcodeIterator implements Iterator<Integer> {
-
-        private BufferedReader reader = null;
-        private String line = null;
-        private Integer opcode;
-
-        public OpcodeIterator (FileReader opcodes) {
-            reader = new BufferedReader(opcodes);
+    public void loadProgram() throws Exception {
+        if (prgMemory == null) throw new AssertionError();
+        String line = null;
+        BufferedReader reader = new BufferedReader(opcodes);
+        while ((line = reader.readLine()) != null) {
+            prgMemory.loadInstruction(Integer.parseUnsignedInt(line, 16));
         }
-
-        @Override
-        public boolean hasNext() {
-            try {
-                line = reader.readLine();
-                if (isComment(line))
-                    line = null;
-                return line != null;
-            } catch (IOException e) {
-                return false;
-            }
-        }
-
-        @Override
-        public Integer next() {
-            opcode = Integer.parseInt(line, 16);
-            return opcode;
-        }
-
-        private boolean isComment(String line) {
-            return !(line != null && line.matches("[-e]?\\d*\\.?\\d+"));
-        }
-
     }
 }
