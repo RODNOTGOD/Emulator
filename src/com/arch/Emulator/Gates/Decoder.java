@@ -1,6 +1,4 @@
-package com.arch.Emulator.Gate;
-
-import java.util.Arrays;
+package com.arch.Emulator.Gates;
 
 public class Decoder extends Gate {
 

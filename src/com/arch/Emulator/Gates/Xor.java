@@ -1,4 +1,4 @@
-package com.arch.Emulator.Gate;
+package com.arch.Emulator.Gates;
 
 public class Xor extends Gate {
 

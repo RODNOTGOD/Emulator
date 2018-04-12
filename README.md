@@ -7,7 +7,7 @@
   Build all basic gates: not, and, or, xor. Start looking into how to connect
   all the parts with each other i.e. wires or just pass into other functions
 
-  - [ ] Decoder
+  - [X] Decoder
   - [X] NOT
   - [X] AND
   - [X] OR
@@ -29,7 +29,7 @@
   enabling immediate addressing of memory locations in opcodes
 
   - [ ] EPROM
-  - [ ] Memory
+  - [X] Memory
   - [ ] JMP
   - [ ] CMP
   - [ ] NOP

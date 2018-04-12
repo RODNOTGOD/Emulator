@@ -1,6 +1,4 @@
-package com.arch.Emulator.Gate;
-
-import java.util.Arrays;
+package com.arch.Emulator.Gates;
 
 
 /**
@@ -22,7 +20,7 @@ public class Multiplexer extends Gate {
 
         assert inputs != null;
         assert outputs != null;
-        assert selectors != null;
+        assert inputSelectors != null;
 
 
         // The number of input lines must be a power of two.
@@ -32,7 +30,7 @@ public class Multiplexer extends Gate {
 
         // This takes in the selector inputs and converts it from binary to decimal,
         // which will equal the number of the selected line.
-        for (int i: selectors) {
+        for (int i: inputSelectors) {
             builder.append(i);
         }
         String binary = builder.toString();

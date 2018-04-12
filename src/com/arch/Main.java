@@ -1,7 +1,6 @@
 package com.arch;
 
 import com.arch.Emulator.Cpu;
-import com.arch.Emulator.Gate.Multiplexer;
 import com.arch.Emulator.OpcodeReader;
 
 public class Main {

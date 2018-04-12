@@ -1,9 +1,6 @@
-package com.arch.Emulator.Gate;
+package com.arch.Emulator.Gates;
 
 import org.junit.Test;
-import java.util.Arrays;
-
-import java.util.Random;
 
 import static org.junit.Assert.*;
 
@@ -19,9 +16,9 @@ public class MultiplexerTest {
         int[] selector = {0, 0};
         int[] selector2;
         int expected = 32;
-        testMuxGate = new Multiplexer(inputs.length);
+        testMuxGate = new Multiplexer(numOfInputLines);
         testMuxGate.loadArguments(inputs);
-        testMuxGate.setSelector(selector);
+        testMuxGate.setInputSelector(selector);
         assertEquals(expected, testMuxGate.calculate()[0]);
 
         numOfInputLines = 4;
@@ -30,7 +27,7 @@ public class MultiplexerTest {
         expected = 48;
         testMuxGate = new Multiplexer(numOfInputLines);
         testMuxGate.loadArguments(inputs);
-        testMuxGate.setSelector(selector);
+        testMuxGate.setInputSelector(selector);
         assertEquals(expected, testMuxGate.calculate()[0]);
 
         numOfInputLines = 8;
@@ -41,7 +38,7 @@ public class MultiplexerTest {
         expected = 14;
         testMuxGate = new Multiplexer(numOfInputLines);
         testMuxGate.loadArguments(inputs2);
-        testMuxGate.setSelector(selector2);
+        testMuxGate.setInputSelector(selector2);
         assertEquals(expected, testMuxGate.calculate()[0]);
 
     }
