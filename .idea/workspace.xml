@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6a30c89c-ea16-4319-b4e2-5a96520ee049" name="Default" comment="k">
-      <change afterPath="$PROJECT_DIR$/src/com/arch/Emulator/Gate/Multiplexer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="6a30c89c-ea16-4319-b4e2-5a96520ee049" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Tests/com/arch/Emulator/Gate/MultiplexerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Emulator.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Emulator.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/arch/Emulator/Gate/Multiplexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arch/Emulator/Gate/Multiplexer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/arch/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arch/Main.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,76 +20,10 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/arch/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
-              <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+            <state relative-caret-position="274">
+              <caret line="28" column="37" lean-forward="true" selection-start-line="28" selection-start-column="37" selection-end-line="28" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Multiplexer.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Gate/Multiplexer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
-              <caret line="30" column="21" lean-forward="true" selection-start-line="30" selection-start-column="21" selection-end-line="30" selection-end-column="21" />
-              <folding>
-                <element signature="e#615#616#0" expanded="true" />
-                <element signature="e#668#669#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OpcodeReader.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/OpcodeReader.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="211">
-              <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#564#565#0" expanded="true" />
-                <element signature="e#614#615#0" expanded="true" />
-                <element signature="e#848#849#0" expanded="true" />
-                <element signature="e#908#909#0" expanded="true" />
-                <element signature="e#1408#1409#0" expanded="true" />
-                <element signature="e#1491#1492#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Decoder.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Gate/Decoder.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="199">
-              <caret line="30" column="25" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
-              <folding>
-                <element signature="e#203#204#0" expanded="true" />
-                <element signature="e#269#270#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Not.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Gate/Not.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="10" column="34" selection-start-line="10" selection-start-column="34" selection-end-line="10" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="And.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Gate/And.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="5" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="5" />
-              <folding>
-                <element signature="e#98#99#0" expanded="true" />
-                <element signature="e#135#136#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -98,17 +32,39 @@
       <file leaf-file-name="Gate.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Gate/Gate.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
+            <state relative-caret-position="228">
+              <caret line="19" selection-start-line="19" selection-end-line="19" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AndTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Tests/com/arch/Emulator/Gate/AndTest.java">
+      <file leaf-file-name="Decoder.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Gate/Decoder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="5" lean-forward="true" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
+            <state relative-caret-position="233">
+              <caret line="33" column="24" selection-start-line="33" selection-start-column="20" selection-end-line="33" selection-end-column="24" />
+              <folding>
+                <element signature="e#203#204#0" expanded="true" />
+                <element signature="e#269#270#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Multiplexer.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Gate/Multiplexer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="241">
+              <caret line="42" column="49" selection-start-line="42" selection-start-column="49" selection-end-line="42" selection-end-column="49" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MultiplexerTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Tests/com/arch/Emulator/Gate/MultiplexerTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="283">
+              <caret line="19" selection-start-line="19" selection-end-line="19" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -121,10 +77,15 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JUnit4 Test Class" />
         <option value="Class" />
+        <option value="JUnit4 Test Class" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>load</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
@@ -150,11 +111,12 @@
         <option value="$PROJECT_DIR$/src/com/arch/Emulator/Gate/Not.java" />
         <option value="$PROJECT_DIR$/src/com/arch/Emulator/Gate/Decoder.java" />
         <option value="$PROJECT_DIR$/src/com/arch/Emulator/Gate/Gate.java" />
-        <option value="$PROJECT_DIR$/src/com/arch/Main.java" />
         <option value="$PROJECT_DIR$/src/com/arch/Emulator/OpcodeReader.java" />
         <option value="$PROJECT_DIR$/input.txt" />
         <option value="$PROJECT_DIR$/src/com/arch/Emulator/Emulator.java" />
         <option value="$PROJECT_DIR$/src/Tests/com/arch/Emulator/Gate/AndTest.java" />
+        <option value="$PROJECT_DIR$/src/Tests/com/arch/Emulator/Gate/MultiplexerTest.java" />
+        <option value="$PROJECT_DIR$/src/com/arch/Main.java" />
         <option value="$PROJECT_DIR$/src/com/arch/Emulator/Gate/Multiplexer.java" />
       </list>
     </option>
@@ -166,8 +128,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="x" value="477" />
     <option name="y" value="23" />
-    <option name="width" value="733" />
+    <option name="width" value="803" />
     <option name="height" value="777" />
   </component>
   <component name="ProjectView">
@@ -303,30 +266,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.All in Emulator">
-    <configuration name="DecoderTest.testBadArguments" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Emulator" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.arch.Emulator.Gate.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.arch.Emulator.Gate" />
-      <option name="MAIN_CLASS_NAME" value="com.arch.Emulator.Gate.DecoderTest" />
-      <option name="METHOD_NAME" value="testBadArguments" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <patterns />
-    </configuration>
+  <component name="RunManager" selected="Application.Main">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
     </configuration>
@@ -375,6 +315,52 @@
       <option name="MAIN_CLASS_NAME" value="com.arch.Emulator.Gate.AndTest" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration name="MultiplexerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Emulator" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.arch.Emulator.Gate.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.arch.Emulator.Gate" />
+      <option name="MAIN_CLASS_NAME" value="com.arch.Emulator.Gate.MultiplexerTest" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration name="MultiplexerTest.testTrue" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Emulator" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.arch.Emulator.Gate.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.arch.Emulator.Gate" />
+      <option name="MAIN_CLASS_NAME" value="com.arch.Emulator.Gate.MultiplexerTest" />
+      <option name="METHOD_NAME" value="testTrue" />
+      <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
@@ -439,14 +425,16 @@
       <item itemvalue="Application.Main" />
       <item itemvalue="JUnit.AndTest" />
       <item itemvalue="JUnit.All in Emulator" />
-      <item itemvalue="Android JUnit.DecoderTest.testBadArguments" />
+      <item itemvalue="JUnit.MultiplexerTest" />
+      <item itemvalue="JUnit.MultiplexerTest.testTrue" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.MultiplexerTest.testTrue" />
+        <item itemvalue="JUnit.MultiplexerTest" />
         <item itemvalue="JUnit.All in Emulator" />
         <item itemvalue="JUnit.AndTest" />
-        <item itemvalue="Application.Main" />
-        <item itemvalue="Android JUnit.DecoderTest.testBadArguments" />
       </list>
     </recent_temporary>
   </component>
@@ -476,65 +464,72 @@
       <option name="project" value="LOCAL" />
       <updated>1523331340238</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added Multiplexer, still working logic">
+      <created>1523493976910</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1523493976910</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="DecoderTest_testBadArguments - 2018.04.09 at 15h 26m 11s.xml">
-      <configuration name="DecoderTest.testBadArguments" configurationId="AndroidJUnit" />
-    </history-entry>
-    <history-entry file="AndTest - 2018.04.09 at 15h 26m 32s.xml">
-      <configuration name="AndTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_Emulator - 2018.04.09 at 15h 27m 03s.xml">
-      <configuration name="All in Emulator" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_Emulator - 2018.04.09 at 15h 29m 15s.xml">
-      <configuration name="All in Emulator" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="AndTest - 2018.04.10 at 13h 56m 30s.xml">
-      <configuration name="AndTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="AndTest - 2018.04.10 at 13h 59m 46s.xml">
-      <configuration name="AndTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="AndTest - 2018.04.11 at 19h 32m 58s.xml">
-      <configuration name="AndTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="AndTest - 2018.04.11 at 19h 33m 17s.xml">
-      <configuration name="AndTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="AndTest - 2018.04.11 at 19h 33m 25s.xml">
       <configuration name="AndTest" configurationId="JUnit" />
     </history-entry>
     <history-entry file="All_in_Emulator - 2018.04.11 at 19h 36m 32s.xml">
       <configuration name="All in Emulator" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="All_in_Emulator - 2018.04.11 at 20h 45m 55s.xml">
+      <configuration name="All in Emulator" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_Emulator - 2018.04.11 at 20h 46m 21s.xml">
+      <configuration name="All in Emulator" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_Emulator - 2018.04.11 at 21h 20m 03s.xml">
+      <configuration name="All in Emulator" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_Emulator - 2018.04.11 at 21h 21m 10s.xml">
+      <configuration name="All in Emulator" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MultiplexerTest - 2018.04.11 at 21h 22m 17s.xml">
+      <configuration name="MultiplexerTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MultiplexerTest - 2018.04.11 at 21h 23m 04s.xml">
+      <configuration name="MultiplexerTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MultiplexerTest_testTrue - 2018.04.11 at 21h 25m 57s.xml">
+      <configuration name="MultiplexerTest.testTrue" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MultiplexerTest_testTrue - 2018.04.11 at 21h 36m 51s.xml">
+      <configuration name="MultiplexerTest.testTrue" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10957000" />
+    <option name="totallyTimeSpent" value="17217000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="733" height="777" extended-state="0" />
+    <frame x="477" y="23" width="803" height="777" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="TODO" order="7" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.3072546" />
+      <window_info anchor="bottom" id="TODO" order="12" />
+      <window_info anchor="bottom" id="Messages" order="16" weight="0.3072546" />
       <window_info anchor="right" id="Palette&#9;" order="8" />
-      <window_info id="Image Layers" order="3" />
+      <window_info id="Image Layers" order="8" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
+      <window_info anchor="bottom" id="Event Log" order="18" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="7" />
-      <window_info anchor="bottom" id="Database Changes" order="0" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="3" weight="0.35561877" />
-      <window_info anchor="bottom" id="Version Control" order="9" visible="true" weight="0.2802276" />
+      <window_info anchor="bottom" id="Database Changes" order="1" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.35561877" />
+      <window_info anchor="bottom" id="Version Control" order="10" weight="0.2802276" />
       <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info id="Capture Tool" order="7" />
-      <window_info id="Designer" order="4" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.2537517" />
+      <window_info id="Capture Tool" order="14" />
+      <window_info id="Designer" order="10" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23163138" />
       <window_info anchor="right" id="Database" order="6" />
-      <window_info id="Learn" order="0" />
+      <window_info id="Learn" order="1" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="5" />
@@ -542,32 +537,32 @@
       <window_info anchor="bottom" id="Debug" order="4" weight="0.3996724" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info id="Designer" order="3" />
+      <window_info id="Designer" order="9" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Terminal" order="13" />
+      <window_info id="Structure" order="4" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info id="Favorites" order="5" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.28003383" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.39979756" />
-      <window_info id="Image Layers" order="2" />
-      <window_info id="Capture Tool" order="6" />
-      <window_info id="UI Designer" order="4" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3996724" />
+      <window_info anchor="bottom" id="TODO" order="11" />
+      <window_info id="Favorites" order="12" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="14" weight="0.28003383" />
+      <window_info anchor="bottom" id="Run" order="5" weight="0.39979756" />
+      <window_info id="Image Layers" order="7" />
+      <window_info id="Capture Tool" order="13" />
+      <window_info id="UI Designer" order="11" />
+      <window_info anchor="bottom" id="Debug" order="6" weight="0.3996724" />
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info anchor="right" id="Database" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="8" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32938188" />
-      <window_info anchor="bottom" id="Messages" order="9" weight="0.32793522" />
+      <window_info anchor="bottom" id="Event Log" order="17" side_tool="true" />
+      <window_info anchor="bottom" id="Cvs" order="7" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="2" weight="0.32938188" />
+      <window_info anchor="bottom" id="Messages" order="15" weight="0.32793522" />
       <window_info anchor="right" id="Maven Projects" order="7" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.1835294" />
+      <window_info content_ui="combo" id="Project" order="3" weight="0.1835294" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" id="Palette" order="3" />
@@ -577,8 +572,8 @@
       <window_info anchor="bottom" id="Run" order="3" weight="0.39979756" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.1835294" />
-      <window_info id="Learn" order="1" />
+      <window_info content_ui="combo" id="Project" order="1" weight="0.1835294" />
+      <window_info id="Learn" order="0" />
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info anchor="bottom" id="TODO" order="7" />
       <window_info anchor="bottom" id="Database Changes" order="1" show_stripe_button="false" />
@@ -636,25 +631,10 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Fix logic on all gates and added tests&#10;&#10;Changed all logic on gates to return the array outputs so they can&#10;be easily passed to other gates; this allows easier daisy-chaining.&#10;Had to change the interfaces for this to happen and added tests.&#10;The tests are simple junit tests." />
     <MESSAGE value="Add decoder" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add decoder" />
+    <MESSAGE value="Added Multiplexer, still working logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Multiplexer, still working logic" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/OpcodeReader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="24" column="50" selection-start-line="24" selection-start-column="50" selection-end-line="24" selection-end-column="50" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#564#565#0" expanded="true" />
-            <element signature="e#614#615#0" expanded="true" />
-            <element signature="e#848#849#0" expanded="true" />
-            <element signature="e#908#909#0" expanded="true" />
-            <element signature="e#1408#1409#0" expanded="true" />
-            <element signature="e#1491#1492#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Gate/Gate.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -920,6 +900,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Emulator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="798">
+          <caret line="72" column="35" selection-start-line="72" selection-start-column="35" selection-end-line="72" selection-end-column="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Gate/Not.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="10" column="34" selection-start-line="10" selection-start-column="34" selection-end-line="10" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/OpcodeReader.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="211">
@@ -936,12 +933,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Emulator.java">
+    <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Gate/And.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="798">
-          <caret line="72" column="35" selection-start-line="72" selection-start-column="35" selection-end-line="72" selection-end-column="35" />
+        <state relative-caret-position="90">
+          <caret line="6" column="5" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="5" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#98#99#0" expanded="true" />
+            <element signature="e#135#136#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -950,6 +948,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="9" column="23" lean-forward="true" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Tests/com/arch/Emulator/Gate/AndTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="28" lean-forward="true" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -966,35 +974,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Gate/Not.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="10" column="34" selection-start-line="10" selection-start-column="34" selection-end-line="10" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Gate/Gate.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
+        <state relative-caret-position="228">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Gate/And.java">
+    <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Gate/Decoder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="5" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="5" />
+        <state relative-caret-position="233">
+          <caret line="33" column="24" selection-start-line="33" selection-start-column="20" selection-end-line="33" selection-end-column="24" />
           <folding>
-            <element signature="e#98#99#0" expanded="true" />
-            <element signature="e#135#136#0" expanded="true" />
+            <element signature="e#203#204#0" expanded="true" />
+            <element signature="e#269#270#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Tests/com/arch/Emulator/Gate/AndTest.java">
+    <entry file="file://$PROJECT_DIR$/src/Tests/com/arch/Emulator/Gate/MultiplexerTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="5" lean-forward="true" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
+        <state relative-caret-position="283">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1003,33 +1004,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/arch/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+        <state relative-caret-position="274">
+          <caret line="28" column="37" lean-forward="true" selection-start-line="28" selection-start-column="37" selection-end-line="28" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Gate/Decoder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="30" column="25" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
-          <folding>
-            <element signature="e#203#204#0" expanded="true" />
-            <element signature="e#269#270#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Gate/Multiplexer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="30" column="21" lean-forward="true" selection-start-line="30" selection-start-column="21" selection-end-line="30" selection-end-column="21" />
-          <folding>
-            <element signature="e#615#616#0" expanded="true" />
-            <element signature="e#668#669#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="241">
+          <caret line="42" column="49" selection-start-line="42" selection-start-column="49" selection-end-line="42" selection-end-column="49" />
         </state>
       </provider>
     </entry>
