@@ -4,6 +4,7 @@ public abstract class Gate {
 
     int[] inputs;
     int[] outputs;
+    int[] selectors;
 
     public Gate(int numOfInputs, int numOfOutputs) {
         inputs = new int[numOfInputs];
@@ -19,6 +20,10 @@ public abstract class Gate {
         if (inputs.length != this.inputs.length)
             throw new IllegalArgumentException("Not matching arguments");
         System.arraycopy(inputs, 0, this.inputs, 0, inputs.length);
+    }
+
+    public void setSelector(int[] controlLines){
+        selectors = controlLines;
     }
 
     public abstract int[] calculate();
