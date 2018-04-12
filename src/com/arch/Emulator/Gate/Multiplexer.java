@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class Multiplexer extends Gate {
 
     public Multiplexer(int numOfInputs) {
-        super(numOfInputs, 1);
+        super((int) (Math.log(numOfInputs)/Math.log(2)), 1);
 
     }
 
@@ -42,8 +42,6 @@ public class Multiplexer extends Gate {
         String binary = builder.toString();
 
         outputs[0] = Integer.parseInt(binary, 2);
-        System.out.println(outputs[0]);
-        System.out.println(outputs);
 
         //TODO: Set the output to equal the value of data on line[selectedLine]
         // for example, if line 2 is selected, the output will be whatever the value passed

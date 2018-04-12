@@ -19,16 +19,6 @@ public class Main {
         //    emulator.read(opcode);
         //}
 
-        Multiplexer testMuxGate;
-        int numOfInputLines = 4;
-        int[] selector = {1, 0};
-        int[] expected = {2};
-        testMuxGate = new Multiplexer(selector.length);
-        testMuxGate.loadArguments(selector);
-        System.out.println(selector);
-
-        System.out.println(testMuxGate.calculate());
-
         try {
             loader.loadMemory(cpu.getMemory());
             loader.loadProgram();
