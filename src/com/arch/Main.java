@@ -26,9 +26,7 @@ public class Main {
         int[] expected = {2};
         testMuxGate = new Multiplexer(selector.length);
         testMuxGate.loadArguments(selector);
-        System.out.println(selector);
 
-        System.out.println(testMuxGate.calculate());
     }
 
 }

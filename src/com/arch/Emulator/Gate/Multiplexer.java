@@ -38,9 +38,12 @@ public class Multiplexer extends Gate {
         for (int i: inputs) {
             builder.append(i);
         }
+
         String binary = builder.toString();
 
-        outputs[0] = Integer.parseInt(binary, 10);
+        outputs[0] = Integer.parseInt(binary, 2);
+        System.out.println(outputs[0]);
+        System.out.println(outputs);
 
         //TODO: Set the output to equal the value of data on line[selectedLine]
         // for example, if line 2 is selected, the output will be whatever the value passed

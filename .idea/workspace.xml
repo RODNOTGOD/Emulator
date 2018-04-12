@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6a30c89c-ea16-4319-b4e2-5a96520ee049" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Tests/com/arch/Emulator/Gate/MultiplexerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/arch/Emulator/Gate/Multiplexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arch/Emulator/Gate/Multiplexer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/arch/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arch/Main.java" afterDir="false" />
@@ -20,8 +19,8 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/arch/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="274">
-              <caret line="28" column="37" lean-forward="true" selection-start-line="28" selection-start-column="37" selection-end-line="28" selection-end-column="37" />
+            <state relative-caret-position="286">
+              <caret line="29" column="37" lean-forward="true" selection-start-line="29" selection-start-column="37" selection-end-line="29" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -41,7 +40,7 @@
       <file leaf-file-name="Decoder.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Gate/Decoder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="233">
+            <state relative-caret-position="-70">
               <caret line="33" column="24" selection-start-line="33" selection-start-column="20" selection-end-line="33" selection-end-column="24" />
               <folding>
                 <element signature="e#203#204#0" expanded="true" />
@@ -54,8 +53,8 @@
       <file leaf-file-name="Multiplexer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Gate/Multiplexer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="241">
-              <caret line="42" column="49" selection-start-line="42" selection-start-column="49" selection-end-line="42" selection-end-column="49" />
+            <state relative-caret-position="224">
+              <caret line="43" column="47" selection-start-line="43" selection-start-column="47" selection-end-line="43" selection-end-column="47" />
             </state>
           </provider>
         </entry>
@@ -471,7 +470,14 @@
       <option name="project" value="LOCAL" />
       <updated>1523493976910</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Fixed mux logic, need to polish output">
+      <created>1523501885943</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1523501885943</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -507,7 +513,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17217000" />
+    <option name="totallyTimeSpent" value="18173000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="477" y="23" width="803" height="777" extended-state="0" />
@@ -522,12 +528,12 @@
       <window_info anchor="bottom" id="Event Log" order="18" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="7" />
       <window_info anchor="bottom" id="Database Changes" order="1" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.35561877" />
+      <window_info active="true" anchor="bottom" id="Run" order="3" visible="true" weight="0.35561877" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.2802276" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info id="Capture Tool" order="14" />
       <window_info id="Designer" order="10" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23163138" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23163138" />
       <window_info anchor="right" id="Database" order="6" />
       <window_info id="Learn" order="1" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
@@ -632,7 +638,8 @@
     <MESSAGE value="Fix logic on all gates and added tests&#10;&#10;Changed all logic on gates to return the array outputs so they can&#10;be easily passed to other gates; this allows easier daisy-chaining.&#10;Had to change the interfaces for this to happen and added tests.&#10;The tests are simple junit tests." />
     <MESSAGE value="Add decoder" />
     <MESSAGE value="Added Multiplexer, still working logic" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Multiplexer, still working logic" />
+    <MESSAGE value="Fixed mux logic, need to polish output" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed mux logic, need to polish output" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Gate/Gate.java">
@@ -974,24 +981,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Gate/Gate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Gate/Decoder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="33" column="24" selection-start-line="33" selection-start-column="20" selection-end-line="33" selection-end-column="24" />
-          <folding>
-            <element signature="e#203#204#0" expanded="true" />
-            <element signature="e#269#270#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Tests/com/arch/Emulator/Gate/MultiplexerTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="283">
@@ -1004,18 +993,36 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/arch/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="28" column="37" lean-forward="true" selection-start-line="28" selection-start-column="37" selection-end-line="28" selection-end-column="37" />
+        <state relative-caret-position="286">
+          <caret line="29" column="37" lean-forward="true" selection-start-line="29" selection-start-column="37" selection-end-line="29" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Gate/Gate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Gate/Decoder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-70">
+          <caret line="33" column="24" selection-start-line="33" selection-start-column="20" selection-end-line="33" selection-end-column="24" />
+          <folding>
+            <element signature="e#203#204#0" expanded="true" />
+            <element signature="e#269#270#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/arch/Emulator/Gate/Multiplexer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="42" column="49" selection-start-line="42" selection-start-column="49" selection-end-line="42" selection-end-column="49" />
+        <state relative-caret-position="224">
+          <caret line="43" column="47" selection-start-line="43" selection-start-column="47" selection-end-line="43" selection-end-column="47" />
         </state>
       </provider>
     </entry>
