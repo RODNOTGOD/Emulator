@@ -1,16 +1,15 @@
 package com.arch;
 
-import com.arch.Emulator.Emulator;
+import com.arch.Emulator.Cpu;
 import com.arch.Emulator.Gate.Multiplexer;
 import com.arch.Emulator.OpcodeReader;
-import java.util.Arrays;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Emulator emulator = new Emulator();
-        OpcodeReader reader = new OpcodeReader("input.txt");
+        Cpu cpu = new Cpu();
+        OpcodeReader loader = new OpcodeReader("input.txt");
 
         /*
          * This section here we are going to read the hex/opcodes into the decoder
@@ -26,7 +25,22 @@ public class Main {
         int[] expected = {2};
         testMuxGate = new Multiplexer(selector.length);
         testMuxGate.loadArguments(selector);
+        System.out.println(selector);
 
+        System.out.println(testMuxGate.calculate());
+
+        try {
+            loader.loadMemory(cpu.getMemory());
+            loader.loadProgram();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        cpu.run();
+
+        // Dump out memory at end of program
+        // Mostly just a debugging tool
+        System.out.println(cpu.getMemory());
     }
 
 }
