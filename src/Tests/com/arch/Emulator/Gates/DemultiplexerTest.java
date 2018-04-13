@@ -10,8 +10,8 @@ public class DemultiplexerTest {
 
     @Test
     public void testTrue(){
-        int[] expected = {0, 4, 0, 0};
-        int[] inputs = {2, 4};
+        int[] expected = {0, 32, 0, 0};
+        int[] inputs = {2, 32};
         int[] inputSelector = {1};
         int[] outputSelector = {0, 1};
         int[] result;

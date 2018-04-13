@@ -10,7 +10,7 @@
   - [X] Decoder
   - [X] NOT
   - [X] AND
-  - [X] OR
+  - [ ] OR
   - [ ] XOR
 
 ### Week 2 ###
@@ -21,7 +21,7 @@
   - [ ] Registers(1,2,3,4,5,6,7,8)
   - [ ] Stack pointer
   - [ ] Instruction pointer
-  - [ ] mux/demux
+  - [X] mux/demux
 
 ### Week 3 ###
 
