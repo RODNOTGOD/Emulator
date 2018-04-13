@@ -1,41 +1,80 @@
 package com.arch.Emulator;
 
-import org.omg.PortableInterceptor.INACTIVE;
-//import sun.rmi.server.InactiveGroupException;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-
 public class Memory {
 
     private char[][] ram;
+    private int dataLocation = 0;
     private int programLocation = 0;
     private int endOfProgram = 0;
 
+    /**
+     * Main memory for the cpu architecture with a 16-bit range of memory to
+     * use
+     */
     Memory() {
+        // create memory for range of 0x0000 0xFFFF
         ram = new char[16][];
-        // 16 bit ram
         for (int i = 0; i < 16; i++) {
             ram[i] = new char[0x1000];
         }
     }
 
+    /**
+     * Writes an opcode to a the end of the program location for reading during execution.
+     * <p>
+     *     The start of each program will start at address 0x4000. The program location will always start writing
+     *     to this section of memory. And for every opcode received it will write the opcode to the last location.
+     *     Each opcode is read as 4 bytes and each byte is written one at a time to a specific offset. The opcodes
+     *     are written always in 4 bytes and in little endian memory.
+     * </p>
+     * <p>
+     *     Each of the upper byte of the program location will determine the writing location of what chip to write to.
+     *     The lower 16 bits will determine what offset in the chip specifically to write to.
+     * </p>
+     * <p>
+     *     <br>Example: 0x4302 address to write opcode 8094.<br>
+     *
+     *     <br>ram chip = 4 // where 4 is the ram chip in memory<br>
+     *     chipOffset = 0x302 // where the lower 16 bits are use for the offset in the chip<br>
+     *
+     *     <br> So we write to location ram[4][0x302] = 00<br>
+     *     So we write to location ram[4][0x303] = 00<br>
+     *     So we write to location ram[4][0x304] = 80<br>
+     *     So we write to location ram[4][0x305] = 94
+     * </p>
+     * @param opcode the instruction to write to memory
+     */
     public void loadInstruction(int opcode) {
         opcode = Integer.reverseBytes(opcode);
-        if (programLocation == 0)
+        // Check if the program has been loaded yet
+        if (programLocation == 0) {
+            // If not just load at address 0x4000
             programLocation = 0x4000;
-        while (opcode != 0) {
-            ram[(programLocation & 0xFFFF) >> 12][programLocation & 0xFFF] = (char) (opcode & 0xFF);
-            opcode >>= 8;
-            programLocation += 1;
         }
-        endOfProgram = programLocation;
+
+        // Keep shifting opcode 1 byte at a time
+        while (opcode != 0) {
+            int ramChip = (programLocation & 0xFFFF) >> 12; // upper byte as ram chip selection
+            int ramChipOffset = (programLocation & 0xFFF); // lower 16 bits as chip offset
+
+            ram[ramChip][ramChipOffset] = (char) (opcode & 0xFF);
+            opcode >>= 8; // next byte to write
+
+            programLocation++; // increase program offset
+        }
+
+        endOfProgram = programLocation; // mark end of written section
     }
 
     public int getEndOfProgram() {
         return endOfProgram;
     }
 
+    /**
+     * Reads every location in ram and specifies what section of ram is being read and the contents of the chip
+     *
+     * @return full string contents of the ram
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -53,7 +92,42 @@ public class Memory {
         return sb.toString();
     }
 
-    public int fetch(int instructionPointer) {
-        return ram[(instructionPointer & 0xFFFF) >> 12][instructionPointer & 0xFFF];
+    /**
+     * Reads a fetch on a memory location anywhere below 0xF000
+     *
+     * <p>
+     *     Throws an IllegalAccessException at an illegal memory request.
+     *     This maybe anywhere at a EPROM location (0xF000) or and out of bounds location
+     * </p>
+     *
+     * @param memoryFetch memory location to read at
+     * @return data at requested memory fetch
+     */
+    public int fetch(int memoryFetch) throws IllegalAccessException {
+        if (memoryFetch >= 0xF000) {
+            if (memoryFetch <= 0xFFFF)
+                throw new IllegalAccessException("Illegal access of memory to protected memory at 0x"
+                        + Integer.toHexString(memoryFetch));
+            else
+                throw new IllegalAccessException("Illegal access of out of bound memory at 0x"
+                        + Integer.toHexString(memoryFetch));
+        }
+        int ramChip = (memoryFetch & 0xFFFF) >> 12; // Use upper byte as ram chip selection
+        int ramChipOffset = (memoryFetch & 0xFFF); // Use lower 16 bits as chip offset
+        return ram[ramChip][ramChipOffset];
+    }
+
+    public void write(int memoryFetch, int data) throws IllegalAccessException {
+        if (memoryFetch >= 0x4000) {
+            if (memoryFetch <= 0xFFFF)
+                throw new IllegalAccessException("Illegal access of memory to protected memory at 0x"
+                        + Integer.toHexString(memoryFetch));
+            else
+                throw new IllegalAccessException("Illegal access of out of bound memory at 0x"
+                        + Integer.toHexString(memoryFetch));
+        }
+        int ramChip = (memoryFetch & 0xFFFF) >> 12; // Use upper byte as ram chip selection
+        int ramChipOffset = (memoryFetch & 0xFFF); // Use lower 16 bits as chip offset
+        ram[ramChip][ramChipOffset] = (char) data;
     }
 }

@@ -59,12 +59,17 @@ public class Cpu {
          */
         instructionPointer = 0x4000; // Default starting location
         while (instructionPointer != memory.getEndOfProgram()) {
-            int opcodes = readMemory();
+            int opcodes = 0;
+            try {
+                opcodes = readMemory();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
             System.out.println("Instruction read: " + Integer.toHexString(opcodes));
         }
     }
 
-    private int readMemory() {
+    private int readMemory() throws IllegalAccessException {
         int opcodes = 0;
         for (int i = 0; i < 4; i++) { // read four bytes from ram
             opcodes |= memory.fetch(instructionPointer++);
