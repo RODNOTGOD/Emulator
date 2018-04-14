@@ -1,28 +1,60 @@
 package com.arch.Emulator.Gates;
 
+/**
+ * Depending on the carry in bit, adds or subtracts two 16 bit numbers and returns
+ * the sum/difference as an int. Also sets the carry, overflow, negative, and zero flags.
+ */
+
 public class AddSub extends Gate{
+    final int MAX = 0xff;
 
     public AddSub(int input1, int input2) {
-        super(2, 1);
+        super(2, 2);
     }
 
     @Override
     public int[] calculate() {
-        if (inputSelectors[0] == 0){
-            outputs[0] = add(inputs[1], inputs[0]);
-        }else{
-            outputs[0] = sub(inputs[1], inputs[0]);
-        }
+        int zeroFlag = 0;
+        int carryFlag = 0;
+        int overflowFlag = 0;
+        int negativeFlag = 0;
+        int result;
 
+        assert inputs != null;
+        assert outputs != null;
+        assert inputSelectors != null;      // input selector acts as carry in bit.
+        assert outputSelectors != null;     // output selectors act as flags.
+
+        if (inputSelectors[0] == 0){        // if carry in bit set to 0, add.
+            result = add(inputs[0], inputs[1]);
+        }else{
+            result = sub(inputs[0], inputs[1]);
+        }
+        if (result < 0)
+            negativeFlag = 1;
+        if (result > MAX)
+            overflowFlag = 1;
+
+
+        outputs[0] = result;
         return outputs;
     }
 
-    //TODO: Handle overflow (maxSum = 0xff)
-    //TODO: Determine subtraction argument ordering (if it even matters)
-    //TODO: Set flags for c, z, v, and n (also figure out what that means)
+    //TODO: Handle flags
     public int add(int x, int y){
-        int sum = x + y;
-        return sum;
+        int sum;
+        int carry = 0;
+        int result = 0;
+        for (int i=0; i<16; i++){
+            sum = (x & 1) ^ (y & 1) ^ carry;
+            carry = (((x & 1) ^ (y & 1)) & carry) | ((x & 1) & (y & 1));
+            x>>=1;
+            y>>=1;
+            result |= sum<<i;
+            if (x == 0 && y == 0 && carry == 0)
+                break;
+        }
+        return result;
     }
 
     private int sub(int x, int y){

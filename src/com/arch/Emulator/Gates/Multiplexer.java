@@ -17,6 +17,7 @@ public class Multiplexer extends Gate {
     @Override
     public int[] calculate() {
         StringBuilder builder = new StringBuilder();
+        String binary;
 
         assert inputs != null;
         assert outputs != null;
@@ -33,10 +34,10 @@ public class Multiplexer extends Gate {
         for (int i: inputSelectors) {
             builder.append(i);
         }
-        String binary = builder.toString();
 
-        // Returns the data located at the position the selectors point to.
+        binary = builder.toString();
         outputs[0] = inputs[Integer.parseInt(binary, 2)];
+
         return outputs;
     }
 
