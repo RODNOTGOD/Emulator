@@ -3,13 +3,15 @@ package com.arch.Emulator.Gates;
 /**
  * Depending on the carry in bit, adds or subtracts two 16 bit numbers and returns
  * the sum/difference as an int. Also sets the carry, overflow, negative, and zero flags.
+ *
+ * Usage:
  */
 
 public class AddSub extends Gate{
     final int MAX = 0xff;
 
-    public AddSub(int input1, int input2) {
-        super(2, 2);
+    public AddSub() {
+        super(2, 1);
     }
 
     @Override
@@ -42,19 +44,13 @@ public class AddSub extends Gate{
 
     //TODO: Handle flags
     public int add(int x, int y){
-        int sum;
-        int carry = 0;
-        int result = 0;
-        for (int i=0; i<16; i++){
-            sum = (x & 1) ^ (y & 1) ^ carry;
-            carry = (((x & 1) ^ (y & 1)) & carry) | ((x & 1) & (y & 1));
-            x>>=1;
-            y>>=1;
-            result |= sum<<i;
-            if (x == 0 && y == 0 && carry == 0)
-                break;
+        int carry;
+        while(y != 0) {
+            carry = x & y;
+            x = x ^ y;
+            y = carry << 1;
         }
-        return result;
+        return x;
     }
 
     private int sub(int x, int y){
