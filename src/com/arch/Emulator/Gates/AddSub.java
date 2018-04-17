@@ -20,7 +20,7 @@ public class AddSub extends Gate{
     //TODO: Handle overflow (maxSum = 0xff)
     //TODO: Determine subtraction argument ordering (if it even matters)
     //TODO: Set flags for c, z, v, and n (also figure out what that means)
-    public int add(int x, int y){
+    public static int add(int x, int y){
         int sum = x + y;
         return sum;
     }

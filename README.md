@@ -7,9 +7,9 @@
   Build all basic gates: not, and, or, xor. Start looking into how to connect
   all the parts with each other i.e. wires or just pass into other functions
 
-  - [X] Decoder
-  - [X] NOT
-  - [X] AND
+  - [x] Decoder
+  - [x] NOT
+  - [x] AND
   - [ ] OR
   - [ ] XOR
 
@@ -19,17 +19,17 @@
   of the basic chips.
 
   - [ ] Registers(1,2,3,4,5,6,7,8)
-  - [ ] Stack pointer
+  - [x] Stack pointer
   - [ ] Instruction pointer
-  - [X] mux/demux
+  - [x] mux/demux
 
 ### Week 3 ###
 
   Build memory components and connecting memory to the major components and
   enabling immediate addressing of memory locations in opcodes
 
-  - [ ] EPROM
-  - [X] Memory
+  - [x] EPROM
+  - [x] Memory
   - [ ] JMP
   - [ ] CMP
   - [ ] NOP

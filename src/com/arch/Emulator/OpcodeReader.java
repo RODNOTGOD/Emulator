@@ -1,7 +1,8 @@
 package com.arch.Emulator;
 
 import java.io.*;
-import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class OpcodeReader {
 
@@ -28,10 +29,23 @@ public class OpcodeReader {
 
     public void loadProgram() throws Exception {
         if (prgMemory == null) throw new AssertionError();
-        String line = null;
+        String line;
+        Matcher matcher;
+        Pattern pattern = Pattern.compile("^([\\d|ABCDEF]+)");
         BufferedReader reader = new BufferedReader(opcodes);
         while ((line = reader.readLine()) != null) {
-            prgMemory.loadInstruction(Integer.parseUnsignedInt(line, 16));
+            line = line.toUpperCase();
+            matcher = pattern.matcher(line);
+            if (!matcher.find())
+                continue;
+            int parsed = Integer.parseUnsignedInt(matcher.group(1), 16);
+            int fullOpcode = parsed;
+            int byteLength;
+            for (byteLength = 8; byteLength > 0 && parsed != 0; byteLength--)
+                parsed >>= 4;
+            if (byteLength != 0)
+                fullOpcode <<= byteLength * 4;
+            prgMemory.loadInstruction(fullOpcode);
         }
     }
 }

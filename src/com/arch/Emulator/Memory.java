@@ -1,5 +1,7 @@
 package com.arch.Emulator;
 
+import java.util.Arrays;
+
 public class Memory {
 
     private char[][] ram;
@@ -45,52 +47,26 @@ public class Memory {
      * @param opcode the instruction to write to memory
      */
     public void loadInstruction(int opcode) {
-        opcode = Integer.reverseBytes(opcode);
         // Check if the program has been loaded yet
-        if (programLocation == 0) {
-            // If not just load at address 0x4000
+        // If not just load at address 0x4000
+        if (programLocation == 0)
             programLocation = 0x4000;
-        }
 
-        // Keep shifting opcode 1 byte at a time
-        while (opcode != 0) {
-            int ramChip = (programLocation & 0xFFFF) >> 12; // upper byte as ram chip selection
-            int ramChipOffset = (programLocation & 0xFFF); // lower 16 bits as chip offset
+        int ramChip = (programLocation & 0xFFFF) >> 12; // upper byte as ram chip selection
+        int ramChipOffset = (programLocation & 0xFFF); // lower 16 bits as chip offset
 
-            ram[ramChip][ramChipOffset] = (char) (opcode & 0xFF);
-            opcode >>= 8; // next byte to write
+        // Write the lower bits of the opcode in little endian
+        for (int i = 0; i < 4; i++, opcode >>= 8)
+            ram[ramChip][ramChipOffset + i] = (char) (opcode & 0xFF);
 
-            programLocation++; // increase program offset
-        }
-
-        endOfProgram = programLocation; // mark end of written section
+        programLocation += 4;
+        endOfProgram = programLocation; // mark end of written program
     }
 
     public int getEndOfProgram() {
         return endOfProgram;
     }
 
-    /**
-     * Reads every location in ram and specifies what section of ram is being read and the contents of the chip
-     *
-     * @return full string contents of the ram
-     */
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < ram.length; i++) {
-            sb.append("SECTION " );
-            if (i == 14) sb.append("I/O  ");
-            else if (i == 15) sb.append("EPROM");
-            else sb.append("DATA ");
-            sb.append(": [ $").append(Integer.toHexString(i << 12)).append(" ]");
-            for (int j = 0; j < ram[i].length; j++) {
-                sb.append(" ").append(Integer.toHexString(ram[i][j]));
-            }
-            sb.append("\n");
-        }
-        return sb.toString();
-    }
 
     /**
      * Reads a fetch on a memory location anywhere below 0xF000
@@ -129,5 +105,27 @@ public class Memory {
         int ramChip = (memoryFetch & 0xFFFF) >> 12; // Use upper byte as ram chip selection
         int ramChipOffset = (memoryFetch & 0xFFF); // Use lower 16 bits as chip offset
         ram[ramChip][ramChipOffset] = (char) data;
+    }
+
+    /**
+     * Reads every location in ram and specifies what section of ram is being read and the contents of the chip
+     *
+     * @return full string contents of the ram
+     */
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < ram.length; i++) {
+            sb.append("SECTION " );
+            if (i == 14) sb.append("I/O  ");
+            else if (i == 15) sb.append("EPROM");
+            else sb.append("DATA ");
+            sb.append(": [ $").append(Integer.toHexString(i << 12)).append(" ]");
+            for (int j = 0; j < ram[i].length; j++) {
+                sb.append(String.format(" %2s", Integer.toHexString(ram[i][j])).toUpperCase());
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
     }
 }

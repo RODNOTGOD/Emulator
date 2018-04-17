@@ -4,8 +4,8 @@ import java.util.Random;
 
 public class Register {
 
-    String id;
-    int data;
+    private String id;
+    private int data;
 
     public Register() {
         Random random = new Random(0xFFF);
@@ -19,5 +19,15 @@ public class Register {
         System.out.println("REGISTER " + this.id + ": inialitzed with 0x" + Integer.toHexString(data));
     }
 
+    public void setData(int data) {
+        this.data = data;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public int getData() {
+        return data;
+    }
 }

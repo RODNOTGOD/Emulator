@@ -1,0 +1,60 @@
+// Mov
+8084      // Mov R8, R8
+818F      // Mov R8, $HH
+828FFFF   // Mov R8, [$MMMM]
+83FFFF8   // Mov [$MMMM], R8
+
+// Add
+1084      // Addc R8, R8
+118F      // Addc R8, $HH
+128FFFF   // Addc R8, [$MMMM]
+13FFFF8   // Addc [$MMMM], R8
+
+// Sub
+2084      // Subb R8, R8
+218F      // Subb R8, $HH
+228FFFF   // Subb R8, [$MMMM]
+23FFFF8   // Subb [$MMMM], R8
+
+// Cmp
+3084      // Cmp R8, R8
+318F      // Cmp R8, $HH
+328FFFF   // Cmp R8, [$MMMM]
+33FFFF8   // Cmp [$MMMM], R8
+
+// Not
+40C       // Not R8
+43FFFF    // Not R8
+
+// And
+5084      // And R8, R8
+518F      // And R8, $HH
+528FFFF   // And R8, [$MMMM]
+53FFFF8   // And [$MMMM], R8
+
+// Or
+6084      // Or R8, R8
+618F      // Or R8, $HH
+628FFFF   // Or R8, [$MMMM]
+63FFFF8   // Or [$MMMM], R8
+
+// Xor
+7084      // Xor R8, R8
+718F      // Xor R8, $HH
+728FFFF   // Xor R8, [$MMMM]
+73FFFF8   // Xor [$MMMM], R8
+
+// Jmp
+B806      // Jmp R16
+B9FFFF    // Jmp [$MMMM]
+
+// Conditional
+D62345    // Jlo (jcs) C=1
+D72345    // Jhs (jcc) C=0
+D82345    // Jeq (jzs) Z=1
+D92345    // Jne (jzc) Z=0
+DA2345    // Jmi (jss) S=1
+DB2345    // Jpl (jsc) S=0
+
+// Misc
+E0        // Nop
