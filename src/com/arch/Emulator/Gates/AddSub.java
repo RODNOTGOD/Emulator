@@ -54,9 +54,14 @@ public class AddSub extends Gate{
     }
 
     private int sub(int x, int y){
+        int borrow;
+        while (y!=0){
+            borrow = (~x) & y;
+            x = x ^ y;
+            y = borrow << 1;
+        }
 
-        int diff = x - y;
-        return diff;
+        return x;
     }
 
 }
