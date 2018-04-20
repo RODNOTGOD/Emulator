@@ -2,8 +2,8 @@ package com.arch.Emulator.Gates;
 
 public class And extends Gate {
 
-    public And(int numOfInputs) {
-        super(numOfInputs, 1);
+    public And() {
+        super(2, 1);
     }
 
     @Override

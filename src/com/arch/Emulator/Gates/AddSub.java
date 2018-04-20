@@ -7,7 +7,7 @@ package com.arch.Emulator.Gates;
  * Usage:
  */
 
-public class AddSub extends Gate{
+public class AddSub extends Gate {
     final int MAX = 0xff;
 
     public AddSub() {
@@ -27,11 +27,11 @@ public class AddSub extends Gate{
         assert inputSelectors != null;      // input selector acts as carry in bit.
         assert outputSelectors != null;     // output selectors act as flags.
 
-        if (inputSelectors[0] == 0){        // if carry in bit set to 0, add.
+//        if (inputSelectors[0] == 0) {        // if carry in bit set to 0, add.
             result = add(inputs[0], inputs[1]);
-        }else{
-            result = sub(inputs[0], inputs[1]);
-        }
+//        } else {
+//            result = sub(inputs[0], inputs[1]);
+//        }
         if (result < 0)
             negativeFlag = 1;
         if (result > MAX)
@@ -43,9 +43,9 @@ public class AddSub extends Gate{
     }
 
     //TODO: Handle flags
-    public int add(int x, int y){
+    static public int add(int x, int y) {
         int carry;
-        while(y != 0) {
+        while (y != 0) {
             carry = x & y;
             x = x ^ y;
             y = carry << 1;
@@ -53,9 +53,9 @@ public class AddSub extends Gate{
         return x;
     }
 
-    private int sub(int x, int y){
+    static public int sub(int x, int y) {
         int borrow;
-        while (y!=0){
+        while (y!=0) {
             borrow = (~x) & y;
             x = x ^ y;
             y = borrow << 1;

@@ -11,6 +11,8 @@ public class Main {
         Cpu cpu = new Cpu();
         OpcodeReader loader = new OpcodeReader("input.txt");
 
+        System.out.println(cpu.dumpRegs());
+
         /*
          * This section here we are going to read the hex/opcodes into the decoder
          * We will just read a string and just read into a integer and pass it to the decoder
@@ -22,13 +24,12 @@ public class Main {
             cpu.run();
         } catch (Exception e) {
             e.printStackTrace();
-            System.exit(99);
+        } finally {
+            // Dump out memory at end of program
+            // Mostly just a debugging tool
+            System.out.println(cpu.getMemory());
+            System.out.println(cpu.dumpRegs());
         }
-
-        // Dump out memory at end of program
-        // Mostly just a debugging tool
-        System.out.println(cpu.getMemory());
-        System.out.println(cpu.dumpRegs());
     }
 
 }

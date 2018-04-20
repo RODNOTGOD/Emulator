@@ -1,11 +1,9 @@
 package com.arch.Emulator;
 
-import com.arch.Emulator.Gates.Demultiplexer;
-import com.arch.Emulator.Gates.Multiplexer;
+import com.arch.Emulator.Gates.*;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
 
 public class Cpu {
 
@@ -19,7 +17,7 @@ public class Cpu {
     private Register U13;
 
     // All used integers
-    private int[] flags;
+    private int flags;
 
     private int instructionPointer;
     private int stackPointer;
@@ -27,23 +25,37 @@ public class Cpu {
     private int src;
     private int dst;
 
+    private int instructionLine;
+    private int memoryline;
+    private int dataline8;
+    private int dataline16;
+    private int ALU;
 
     // Main chips
-    Multiplexer U111;
-    Multiplexer U112;
-    Multiplexer U113;
-    Multiplexer U115;
-    Multiplexer U116;
-    Multiplexer U117;
-    Multiplexer U118A;
-    Multiplexer U118B;
-    Multiplexer U120;
-    Multiplexer U220;
+    private Multiplexer U111;
+    private Multiplexer U112;
+    private Multiplexer U113;
+    private Multiplexer U115;
+    private Multiplexer U116;
+    private Multiplexer U117;
+    private Multiplexer U118A;
+    private Multiplexer U118B;
+    private Multiplexer U120;
+    private Multiplexer U220;
 
-    Demultiplexer U114;
+    private Demultiplexer U114A;
+    private Demultiplexer U114B;
+
+    // ALU Chips
+    private AddSub U100;
+    private And U101;
+    private Or  U102;
+    private Xor U103;
+    private Not U104;
+
 
     public Cpu() {
-        flags = new int[4];
+        flags = 0b000;
         U10 = new Register();
         U11 = new Register();
         U12 = new Register();
@@ -59,6 +71,18 @@ public class Cpu {
         U118B = new Multiplexer(8);
         U120 = new Multiplexer(2);
         U220 = new Multiplexer(4);
+
+        U114A = new Demultiplexer(1);
+        U114B = new Demultiplexer(1);
+
+        U100 = new AddSub();
+        U101 = new And();
+        U102 = new Or();
+        U103 = new Xor();
+        U104 = new Not();
+
+        dataline8 = 0;
+        dataline16 = 0;
 
         startup();
     }
@@ -85,48 +109,81 @@ public class Cpu {
      *
      */
     public void run() {
-        instructionPointer = 0x4000; // Default starting location
-        stackPointer = 0x1000;
+        instructionPointer = 0xF000; // Default starting location
+        stackPointer = 0xE000;
         while (instructionPointer < memory.getEndOfProgram()) {
             int opcode = 0;
 
             try {
-                opcode = readMemory();
+                opcode = fetchInstruction();
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
 
-            instructionPointer += 4; // using fixed size of 4 byte instructions
             executeInstruction(opcode);
         }
     }
 
     /**
+     * Reads 4 bytes of numbers for each fetch to program memory
      *
-     * @return
-     * @throws IllegalAccessException
+     * @return the full constructed opcode from little endian
+     * @throws IllegalAccessException bad fetch of memory
      */
-    private int readMemory() throws IllegalAccessException {
+    private int fetchInstruction() throws IllegalAccessException {
         int opcodes = 0;
         for (int i = 0; i < 4; i++) // read four bytes from ram
-            opcodes |= memory.fetch(instructionPointer + i) << (i * 8);
+            opcodes |= memory.secureFetch(instructionPointer + i) << (i * 8);
         return opcodes;
     }
 
     /**
+     * Executes the opcode instruction sent to cpu
      *
-     * @param instruction
+     * Loads all settings to the specific instruction and
+     * executes the opcode
+     *
+     * @param instruction opcode to execute
      */
     private void executeInstruction(int instruction) {
-        int opcode = (instruction >>> 24);
-        applyModifer(opcode, instruction);
+        loadSettings(instruction);
+        runInstructionSettings();
+        // XXX remove this debug
+        System.out.println(dumpRegs());
+    }
+
+    private void loadSettings(int fullOpcode) {
+        int opcode = (fullOpcode >>> 24);
+        applyModifer(opcode, fullOpcode);
         switch (opcode >>> 4) {
             case 0x8: // Mov
-                System.out.println("Mov not implemented");
+                // Update the IP
+                U115.setInputSelector(new int[]{1, 0});
+
+                // What to end if enabled to registers
+                U114A.setInputSelector(convertToBinaryArray(dst));
+                U114A.enabled();
+                U114B.disabled();
+
+                // What to send to data lines
+                U118A.setInputSelector(new int[]{0, 0, 0});
+                U118B.setInputSelector(new int[]{0, 0, 0});
                 break;
+
             case 0x1: // Addc
-                System.out.println("Addc not implemented");
+                // Update the IP
+                U115.setInputSelector(new int[]{1, 0});
+
+                // What to end if enabled to registers
+                U114A.setInputSelector(convertToBinaryArray(dst));
+                U114A.enabled();
+                U114B.disabled();
+
+                // What to send to data lines
+                U118A.setInputSelector(new int[]{0, 1, 1});
+                U118B.setInputSelector(new int[]{0, 1, 1});
                 break;
+
             case 0x2: // Subb
                 System.out.println("Subb not implemented");
                 break;
@@ -160,50 +217,245 @@ public class Cpu {
     }
 
     /**
+     * Applies operand specific controls for data flow
      *
-     * @param modifier
-     * @param instruction
+     * @param modifier operands to use
+     * @param instruction instruction container for dst, src
      */
     private void applyModifer(int modifier, int instruction) {
+        int[] control;
         switch (modifier & 0xf) {
             case 0x0: // Reg to Reg
                 dst = (instruction >>> 22) & 0b11;
                 src = (instruction >>> 18) & 0b11;
-                /*
-                 * Control lines:
-                 *      instruction pointer += size of instruction (4 byte)
-                 *      ignore memory addressing
-                 *      PERFORM ACTION
-                 *      set MUX(u112) to sel(SRC)
-                 *      send to data and set u118_A to sel(0)
-                 *      set DEMUX(u114) to sel_A(DSR)
-                 */
+
+                U115.setInputSelector(convertToBinaryArray(2));
+                U116.setInputSelector(convertToBinaryArray(2));
+
+                U112.setInputSelector(convertToBinaryArray(src));
+                U113.setInputSelector(convertToBinaryArray(dst));
+
+                U111.setInputSelector(new int[]{0, 0, 0});
+
+                U114A.setInputSelector(convertToBinaryArray(dst));
+                U114A.enabled();
+                U114B.disabled();
+
+                control = new int[]{0, 0};
+                U220.setInputSelector(control);
                 break;
+
             case 0x1: // Immediate to Reg
                 dst = (instruction >>> 22) & 0b11;
-                src = (instruction >>> 16) & 0b1111;
-                /*
-                 * Control lines:
-                 *      instruction pointer += size of instruction
-                 *      ignore memory addressing
-                 *      PREFORM ACTION
-                 *
-                 */
+                src = (instruction >>> 12) & 0xFF;
+
+                instructionLine = src;
+
+                control = new int[] {1, 0};
+                U115.setInputSelector(control);
+
+                control = new int[] {1, 0};
+                U116.setInputSelector(control);
+
+                control = convertToBinaryArray(6);
+                U112.setInputSelector(control);
+
+                control = convertToBinaryArray(6);
+                U113.setInputSelector(control);
+
+                control = new int[]{0, 0, 0};
+                U111.setInputSelector(control);
+
+                U114A.setInputSelector(convertToBinaryArray(dst));
+                U114A.enabled();
+                U114B.disabled();
+
+                control = new int[]{0, 0};
+                U220.setInputSelector(control);
                 break;
+
             case 0x2: // Mem loc to Reg
                 dst = (instruction >>> 22) & 0b11;
                 src = (instruction >>> 4) & 0xFFFF;
+
+                U220.disabled(); // reading not writing memory
+                instructionLine = src;
+
+                U115.setInputSelector(convertToBinaryArray(2));
+                U116.setInputSelector(convertToBinaryArray(2));
+                U112.setInputSelector(convertToBinaryArray(4));
+                U113.setInputSelector(convertToBinaryArray(4));
+                U111.setInputSelector(new int[]{0, 0, 0});
+
+                U114A.enabled();
+                U114B.disabled();
                 break;
+
             case 0x3: // Reg to Mem loc
                 dst = (instruction >>> 8) & 0xFFFF;
                 src = (instruction >>> 6) & 0b11;
+                instructionLine = dst;
+
+                U115.setInputSelector(convertToBinaryArray(2));
+                U116.setInputSelector(convertToBinaryArray(2));
+                U112.setInputSelector(convertToBinaryArray(src));
+                U113.setInputSelector(convertToBinaryArray(6));
+                U111.setInputSelector(new int[]{0, 0, 0});
+
+                U114A.disabled();
+                U114B.disabled();
+
+                U220.setInputSelector(new int[]{0 ,0});
+                U220.enabled();
                 break;
+
             case 0x8:
                 break;
+
             case 0x9:
                 break;
         }
     }
+
+    private void runInstructionSettings() {
+        int[] input;
+
+        // Data, Inst, IPinc, IPrel
+        input = new int[] {(dataline16 << 8) | dataline8, dst, AddSub.add(instructionPointer, 4), 0};
+        U115.loadArguments(input);
+        instructionPointer = U115.calculate()[0];
+
+        // Set address access location to memory
+        input = new int[] {instructionPointer, stackPointer, instructionLine, (dataline16 << 8) | dataline8};
+        U116.loadArguments(input);
+        U116.calculate();
+        memoryline = readMemory();
+
+        input = new int[] {dataline8, dataline16, ALU, dst};
+        U220.loadArguments(input);
+        U220.calculate();
+
+        // Load into mux
+        input = new int[] {U10.getData(), U11.getData(), U12.getData(), U13.getData(), memoryline, flags, instructionLine, 0};
+        U112.loadArguments(input);
+        U112.calculate();
+        dataline8 = U112.transmit()[0];
+
+        // Load into mux
+        input = new int[] {U10.getData(), U11.getData(), U12.getData(), U13.getData(), memoryline, flags, instructionLine, 0};
+        U113.loadArguments(input);
+        U113.calculate();
+        dataline16 = U113.transmit()[0];
+
+        // ALU SECTION
+        // Add/Sub
+        input = new int []{U112.transmit()[0], U113.transmit()[0]};
+        U100.loadArguments(input);
+        U100.calculate();
+
+        // And
+        input = new int []{U112.transmit()[0], U113.transmit()[0]};
+        U101.loadArguments(input);
+        U100.calculate();
+
+        // Or
+        input = new int []{U112.transmit()[0], U113.transmit()[0]};
+        U102.loadArguments(input);
+        U102.calculate();
+
+        // Xor
+        input = new int []{U112.transmit()[0], U113.transmit()[0]};
+        U103.loadArguments(input);
+        U103.calculate();
+
+        // Not
+        input = new int []{U112.transmit()[0], U113.transmit()[0]};
+        U104.loadArguments(input);
+        U104.calculate();
+
+        // Set ALU
+        input = new int []{U100.transmit()[0], U101.transmit()[0], U102.transmit()[0], U103.transmit()[0], U104.transmit()[0], 0, 0, 0};
+        U111.loadArguments(input);
+        ALU = U111.calculate()[0];
+
+        input = new int []{dataline8, stackPointer, dst, ALU, 0, memoryline, 0, 0};
+        U118A.loadArguments(input);
+        U118A.calculate();
+
+        input = new int []{dataline16, stackPointer, dst, ALU, 0, memoryline, 0, 0};
+        U118B.loadArguments(input);
+        U118B.calculate();
+
+        // Only if writing to memory
+        input = new int[] {dataline8, dataline16, ALU, dst};
+        U220.loadArguments(input);
+        U220.calculate();
+
+        // write back to register
+//        input = new int[]{U118A.calculate()[0]};
+//        U114A.loadArguments(input);
+//        U114A.calculate();
+
+//        input = new int[]{U118A.calculate()[0]};
+//        U114B.loadArguments(input);
+//        U114B.calculate();
+        writeRegisters();
+        writeMemory();
+    }
+
+    private void writeMemory() {
+        if (U220.isEnabled()) {
+            try {
+                memory.write(U116.transmit()[0], U220.transmit()[0]);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void writeRegisters() {
+        switch (dst) {
+            case 0:
+                if (U114A.isEnabled())
+                    U10.setData(U118A.transmit()[0]);
+                if (U114B.isEnabled())
+                    U10.setData(U118B.transmit()[0]);
+                break;
+            case 1:
+                if (U114A.isEnabled())
+                    U11.setData(U118A.transmit()[0]);
+                if (U114B.isEnabled())
+                    U11.setData(U118B.transmit()[0]);
+                break;
+            case 2:
+                if (U114A.isEnabled())
+                    U12.setData(U118A.transmit()[0]);
+                if (U114B.isEnabled())
+                    U12.setData(U118B.transmit()[0]);
+                break;
+            case 3:
+                if (U114A.isEnabled())
+                    U13.setData(U118A.transmit()[0]);
+                if (U114B.isEnabled())
+                    U13.setData(U118B.transmit()[0]);
+                break;
+        }
+    }
+
+    private int readMemory() {
+        int memRead = 0;
+        // Only write or read mode not both
+        if (!U220.isEnabled()) {
+            try {
+                // Read memory address specified by U116
+                memRead = memory.fetch(U116.transmit()[0]);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        return memRead;
+    }
+
 
     /**
      *
@@ -218,11 +470,38 @@ public class Cpu {
      * @return
      */
     public String dumpRegs() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Reg0(U10): 0x").append(Integer.toHexString(U10.getData()).toUpperCase()).append("\n");
-        sb.append("Reg1(U11): 0x").append(Integer.toHexString(U11.getData()).toUpperCase()).append("\n");
-        sb.append("Reg2(U12): 0x").append(Integer.toHexString(U12.getData()).toUpperCase()).append("\n");
-        sb.append("Reg3(U13): 0x").append(Integer.toHexString(U13.getData()).toUpperCase()).append("\n");
-        return sb.toString();
+        return "Reg0(U10): 0x" + Integer.toHexString(U10.getData()).toUpperCase() + "\n" +
+                "Reg1(U11): 0x" + Integer.toHexString(U11.getData()).toUpperCase() + "\n" +
+                "Reg2(U12): 0x" + Integer.toHexString(U12.getData()).toUpperCase() + "\n" +
+                "Reg3(U13): 0x" + Integer.toHexString(U13.getData()).toUpperCase() + "\n";
+    }
+
+    private int[] convertToBinaryArray(int number) {
+        int arrayLength = (int) Math.floor(Math.log(number) / Math.log(2)) + 1;
+        if (number == 0)
+            arrayLength = 1;
+        int[] convertArray = new int[arrayLength];
+        for (int i = 0; number != 0; i++) {
+            convertArray[i] = number % 2;
+            number >>>= 1;
+        }
+        reverse(convertArray);
+        return convertArray;
+    }
+
+    private static void reverse(int[] data) {
+        int left = 0;
+        int right = data.length - 1;
+
+        while( left < right ) {
+            // swap the values at the left and right indices
+            int temp = data[left];
+            data[left] = data[right];
+            data[right] = temp;
+
+            // move the left and right index pointers in toward the center
+            left++;
+            right--;
+        }
     }
 }

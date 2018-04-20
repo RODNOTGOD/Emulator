@@ -9,40 +9,56 @@ package com.arch.Emulator.Gates;
 
 public class Multiplexer extends Gate {
 
+    private boolean lineState;
+
     public Multiplexer(int numOfInputs) {
         super(numOfInputs, 1);
-
+        lineState = true;
     }
 
     @Override
     public int[] calculate() {
-        StringBuilder builder = new StringBuilder();
-        String binary;
+        if (lineState) {
+            StringBuilder builder = new StringBuilder();
+            String binary;
 
-        assert inputs != null;
-        assert outputs != null;
-        assert inputSelectors != null;
+            if (inputs == null) throw new AssertionError("input is null");
+            if (outputs == null) throw new AssertionError("outputs is null");
+            if (inputSelectors == null) throw new AssertionError("selector is null");
 
 
-        // The number of input lines must be a power of two.
-        if (!IsPowerOfTwo(inputs.length)){
-            throw new IllegalArgumentException(Integer.toString(inputs.length));
+            // The number of input lines must be a power of two.
+            if (!IsPowerOfTwo(inputs.length)) {
+                throw new IllegalArgumentException(Integer.toString(inputs.length));
+            }
+
+            // This takes in the selector inputs and converts it from binary to decimal,
+            // which will equal the number of the selected line.
+            for (int i : inputSelectors) {
+                builder.append(i);
+            }
+
+            binary = builder.toString();
+            outputs[0] = inputs[Integer.parseInt(binary, 2)];
         }
-
-        // This takes in the selector inputs and converts it from binary to decimal,
-        // which will equal the number of the selected line.
-        for (int i: inputSelectors) {
-            builder.append(i);
-        }
-
-        binary = builder.toString();
-        outputs[0] = inputs[Integer.parseInt(binary, 2)];
-
         return outputs;
     }
 
-    public static boolean IsPowerOfTwo(int x){
+    private boolean IsPowerOfTwo(int x){
         return (x != 0) && ((x & (x-1)) == 0);
     }
+
+    public void enabled() {
+        lineState = true;
+    }
+
+    public void disabled() {
+        lineState = false;
+    }
+
+    public boolean isEnabled() {
+        return lineState;
+    }
+
 }
 

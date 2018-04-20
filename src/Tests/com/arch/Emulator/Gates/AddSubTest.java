@@ -31,7 +31,7 @@ public class AddSubTest {
         //Subtract Test
         inputSelector[0] = 1;
         inputs[0] = 13;
-       expected[0] = 7;
+        expected[0] = 7;
         addsubTest.loadArguments(inputs);
         addsubTest.setInputSelector(inputSelector);
         addsubTest.setOutputSelector(outputSelector);
