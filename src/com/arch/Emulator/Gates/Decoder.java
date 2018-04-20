@@ -15,7 +15,7 @@ public class Decoder extends Gate {
         assert inputs != null;
         assert outputs != null;
 
-        And andGate = new And(inputs.length);
+        And andGate = new And();
         int[][] sets = new int[inputs.length][2];
         int marker = sets.length - 1;
 

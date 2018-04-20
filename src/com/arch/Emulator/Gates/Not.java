@@ -3,7 +3,7 @@ package com.arch.Emulator.Gates;
 public class Not extends Gate {
 
     public Not() {
-        super(1, 1);
+        super(2, 1);
     }
 
     @Override

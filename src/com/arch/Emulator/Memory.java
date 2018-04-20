@@ -1,7 +1,5 @@
 package com.arch.Emulator;
 
-import java.util.Arrays;
-
 public class Memory {
 
     private char[][] ram;
@@ -24,7 +22,7 @@ public class Memory {
     /**
      * Writes an opcode to a the end of the program location for reading during execution.
      * <p>
-     *     The start of each program will start at address 0x4000. The program location will always start writing
+     *     The start of each program will start at address of EPROM (0x4000). The program location will always start writing
      *     to this section of memory. And for every opcode received it will write the opcode to the last location.
      *     Each opcode is read as 4 bytes and each byte is written one at a time to a specific offset. The opcodes
      *     are written always in 4 bytes and in little endian memory.
@@ -47,10 +45,9 @@ public class Memory {
      * @param opcode the instruction to write to memory
      */
     public void loadInstruction(int opcode) {
-        // Check if the program has been loaded yet
-        // If not just load at address 0x4000
+        // Check if the program has been loaded yet into EPROM
         if (programLocation == 0)
-            programLocation = 0x4000;
+            programLocation = 0xF000;
 
         int ramChip = (programLocation & 0xFFFF) >> 12; // upper byte as ram chip selection
         int ramChipOffset = (programLocation & 0xFFF); // lower 16 bits as chip offset
@@ -88,6 +85,15 @@ public class Memory {
                 throw new IllegalAccessException("Illegal access of out of bound memory at 0x"
                         + Integer.toHexString(memoryFetch));
         }
+        int ramChip = (memoryFetch & 0xFFFF) >> 12; // Use upper byte as ram chip selection
+        int ramChipOffset = (memoryFetch & 0xFFF); // Use lower 16 bits as chip offset
+        return ram[ramChip][ramChipOffset];
+    }
+
+    public int secureFetch(int memoryFetch) throws IllegalAccessException {
+        if (memoryFetch > 0xFFFF)
+            throw new IllegalAccessException("Illegal access of out of bound memory at 0x"
+                    + Integer.toHexString(memoryFetch));
         int ramChip = (memoryFetch & 0xFFFF) >> 12; // Use upper byte as ram chip selection
         int ramChipOffset = (memoryFetch & 0xFFF); // Use lower 16 bits as chip offset
         return ram[ramChip][ramChipOffset];

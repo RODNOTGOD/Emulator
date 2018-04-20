@@ -2,8 +2,8 @@ package com.arch.Emulator.Gates;
 
 public class Xor extends Gate {
 
-    public Xor(int numOfInputs) {
-        super(numOfInputs, 1);
+    public Xor() {
+        super(2, 1);
     }
 
     @Override

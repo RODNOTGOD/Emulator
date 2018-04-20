@@ -9,8 +9,8 @@ package com.arch.Emulator.Gates;
 
 public class Demultiplexer extends Gate {
 
-    public Demultiplexer(int numOfInputs, int numOfOutputs) {
-        super(numOfInputs, numOfOutputs);
+    public Demultiplexer(int numOfInputs) {
+        super(numOfInputs, (int) Math.pow(2, numOfInputs));
 
     }
 

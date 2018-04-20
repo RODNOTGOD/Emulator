@@ -17,7 +17,7 @@ public class DemultiplexerTest {
         int[] result;
 
         //Select from Line 1 and pass data to Line 1
-        demuxTest = new Demultiplexer(inputs.length, 4);
+        demuxTest = new Demultiplexer(inputs.length);
         demuxTest.loadArguments(inputs);
         demuxTest.setInputSelector(inputSelector);
         demuxTest.setOutputSelector(outputSelector);

@@ -19,9 +19,9 @@ public class Multiplexer extends Gate {
         StringBuilder builder = new StringBuilder();
         String binary;
 
-        assert inputs != null;
-        assert outputs != null;
-        assert inputSelectors != null;
+        if (inputs == null) throw new AssertionError("input is null");
+        if (outputs == null) throw new AssertionError("outputs is null");
+        if (inputSelectors == null) throw new AssertionError("selector is null");
 
 
         // The number of input lines must be a power of two.
