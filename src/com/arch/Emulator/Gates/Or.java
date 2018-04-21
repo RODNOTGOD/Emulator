@@ -11,7 +11,7 @@ public class Or extends Gate {
 
     @Override
     public int[] calculate() {
-        outputs[0] = 0x00000000;
+        //outputs[0] = 0x00000000;
         for (int bit : inputs)
             outputs[0] |= bit;
         return outputs;

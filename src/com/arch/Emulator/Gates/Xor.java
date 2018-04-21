@@ -8,10 +8,9 @@ public class Xor extends Gate {
 
     @Override
     public int[] calculate() {
-        outputs[0] = inputs[0];
-        for(int i = 1; i < inputs.length; i++){
-            outputs[0] ^= inputs[i];
-        }
+        outputs[0] =0x00000000;
+        for(int bit: inputs)
+            outputs[0] ^= bit;
         return outputs;
     }
 }
