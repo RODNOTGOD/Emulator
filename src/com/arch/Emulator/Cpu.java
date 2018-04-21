@@ -54,23 +54,23 @@ public class Cpu {
 
     public Cpu() {
         flags = 0b000;
-        U10 = new Register();
-        U11 = new Register();
-        U12 = new Register();
-        U13 = new Register();
+        U10 = new Register();   // Register 0
+        U11 = new Register();   // Register 1
+        U12 = new Register();   // Register 2
+        U13 = new Register();   // Register 3
 
-        U111 = new Multiplexer(8);
-        U112 = new Multiplexer(8);
-        U113 = new Multiplexer(8);
-        U115 = new Multiplexer(4);
-        U116 = new Multiplexer(4);
-        U117 = new Multiplexer(2);
-        U118A = new Multiplexer(8);
-        U118B = new Multiplexer(8);
-        U120 = new Multiplexer(2);
-        U220 = new Multiplexer(4);
+        U111 = new Multiplexer(8);  // 8-1 Mux after logic gates
+        U112 = new Multiplexer(8);  // 8-1 Mux after Registers
+        U113 = new Multiplexer(8);  // 8-1 Mux after Registers
+        U115 = new Multiplexer(4);  // 4-1 Mux feeds into IP
+        U116 = new Multiplexer(4);  // 4-1 Mux from IR to Memory
+        U117 = new Multiplexer(2);  // 2-1 Mux feeds into SP
+        U118A = new Multiplexer(8); // 8-1 Mux feeds into U114 demux
+        U118B = new Multiplexer(8); // 8-1 Mux feeds into U114 demux
+        U120 = new Multiplexer(2);  // 2-1 Mux feeds into flags
+        U220 = new Multiplexer(4);  // 4-1 Mux feeds into memory
 
-        U114 = new Demultiplexer(2);
+        U114 = new Demultiplexer(2); // 2-4 Demux feeds into registers
 
         U100 = new AddSub();
         U101 = new And();
