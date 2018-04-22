@@ -7,6 +7,7 @@ public class Memory {
     private int programLocation = 0;
     private int endOfProgram = 0;
 
+
     /**
      * Main memory for the cpu architecture with a 16-bit range of memory to
      * use
@@ -18,6 +19,7 @@ public class Memory {
             ram[i] = new char[0x1000];
         }
     }
+
 
     /**
      * Writes an opcode to a the end of the program location for reading during execution.
@@ -60,6 +62,11 @@ public class Memory {
         endOfProgram = programLocation; // mark end of written program
     }
 
+
+    /**
+     *
+     * @return
+     */
     public int getEndOfProgram() {
         return endOfProgram;
     }
@@ -90,6 +97,13 @@ public class Memory {
         return ram[ramChip][ramChipOffset];
     }
 
+
+    /**
+     *
+     * @param memoryFetch
+     * @return
+     * @throws IllegalAccessException
+     */
     public int secureFetch(int memoryFetch) throws IllegalAccessException {
         if (memoryFetch > 0xFFFF)
             throw new IllegalAccessException("Illegal access of out of bound memory at 0x"
@@ -99,6 +113,13 @@ public class Memory {
         return ram[ramChip][ramChipOffset];
     }
 
+
+    /**
+     *
+     * @param memoryFetch
+     * @param data
+     * @throws IllegalAccessException
+     */
     public void write(int memoryFetch, int data) throws IllegalAccessException {
         if (memoryFetch >= 0xF000) {
             if (memoryFetch <= 0xFFFF)
@@ -112,6 +133,7 @@ public class Memory {
         int ramChipOffset = (memoryFetch & 0xFFF); // Use lower 16 bits as chip offset
         ram[ramChip][ramChipOffset] = (char) data;
     }
+
 
     /**
      * Reads every location in ram and specifies what section of ram is being read and the contents of the chip

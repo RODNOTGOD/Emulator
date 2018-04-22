@@ -3,7 +3,7 @@ package com.arch.Emulator.Gates;
 public class Not extends Gate {
 
     public Not() {
-        super(2, 1);
+        super(1, 1);
     }
 
     @Override
@@ -11,7 +11,7 @@ public class Not extends Gate {
     // 32 bit.
     public int[] calculate() {
         outputs[0] = inputs[0];
-        int mask = 0x0000000F;
+        int mask = 0x0000000FF;
         for (int bit : inputs)
             outputs[0] = (~bit) & mask;
         return outputs;

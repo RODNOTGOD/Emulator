@@ -1,11 +1,8 @@
-810FF // move $6 to reg2
-814AF // move $6 to reg2
-818BF // move $6 to reg2
-81CEF // move $6 to reg2
-81006
-83E0020
-828E002   // Mov R8, [$MMMM]
-83E0000
-83E0014
-83E0028
-83E003C
+810FF // move $FF to reg0
+814AF // move $AF to reg1
+8189E // move $BF to reg2
+81C2D // move $EF to reg3
+//8189E // move $BF to reg2
+//81C2D // move $EF to reg3
+30C8
+D6FFEC

@@ -1,6 +1,7 @@
 package com.arch;
 
 import com.arch.Emulator.Cpu;
+import com.arch.Emulator.Gates.AddSub;
 import com.arch.Emulator.OpcodeReader;
 import com.arch.Emulator.Register;
 
@@ -29,6 +30,7 @@ public class Main {
             // Mostly just a debugging tool
             System.out.println(cpu.getMemory());
             System.out.println(cpu.dumpRegs());
+            System.out.println(cpu.dumpFlags());
         }
     }
 
