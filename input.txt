@@ -1,8 +1,17 @@
-810FF // move $FF to reg0
-814AF // move $AF to reg1
-8189E // move $BF to reg2
-81C2D // move $EF to reg3
-//8189E // move $BF to reg2
-//81C2D // move $EF to reg3
-30C8
-D6FFEC
+8100A   // mov R0, $A
+81400   // mov R1, $0
+1100A   // add R0, $A
+11401   // add R1, $1
+31409   // cmp R1, $1
+D9FFF0  // jne $FFF0
+8100a   // mov R0, $A
+8140b   // mov $1, $B
+2004    // subb R0, R1
+810FF
+8360000 // mov [$6000], 0
+818F8   // mov R2, $F8
+1206000 // add 0, [$6000]
+810F0   // mov R0, $F0
+81400   // mov R1, $0
+//436000
+1360000

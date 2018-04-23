@@ -23,10 +23,20 @@ public class OpcodeReader {
         }
     }
 
+    /**
+     * Loads the cpu's main memory and allows to write main program
+     *
+     * @param memory memory object to write to
+     */
     public void loadMemory(Memory memory) {
         this.prgMemory = memory;
     }
 
+    /**
+     * Loads a program into the cpu's main memory
+     *
+     * @throws Exception bad write to cpu memory
+     */
     public void loadProgram() throws Exception {
         if (prgMemory == null) throw new AssertionError();
         String line;

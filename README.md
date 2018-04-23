@@ -10,17 +10,17 @@
   - [x] Decoder
   - [x] NOT
   - [x] AND
-  - [ ] OR
-  - [ ] XOR
+  - [x] OR
+  - [x] XOR
 
 ### Week 2 ###
 
   Start focusing all major components of the CPU. And finalizing the connection
   of the basic chips.
 
-  - [ ] Registers(1,2,3,4,5,6,7,8)
+  - [x] Registers(1,2,3,4,5,6,7,8)
   - [x] Stack pointer
-  - [ ] Instruction pointer
+  - [x] Instruction pointer
   - [x] mux/demux
 
 ### Week 3 ###
@@ -30,12 +30,12 @@
 
   - [x] EPROM
   - [x] Memory
-  - [ ] JMP
-  - [ ] CMP
-  - [ ] NOP
-  - [ ] ADDC
-  - [ ] SUBB
-  - [ ] FLAGS
+  - [x] JMP
+  - [x] CMP
+  - [x] NOP
+  - [x] ADDC
+  - [x] SUBB
+  - [x] FLAGS
 
 ### Week 4 ###
 

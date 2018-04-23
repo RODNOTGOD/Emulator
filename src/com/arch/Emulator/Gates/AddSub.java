@@ -12,11 +12,11 @@ import org.omg.PortableInterceptor.INACTIVE;
 public class AddSub extends Gate {
 
     // ZERO, OVERFLOW, SIGNED, CARRY
-    public static int pubFlags = 0x0;
+    private static int pubFlags = 0x0;
     private static int flags = 0x0;
 
-    boolean addit = true;
-    boolean enabled = false;
+    private boolean addit = true;
+    private boolean enabled = false;
 
     public AddSub() {
         super(2, 1);
@@ -24,21 +24,20 @@ public class AddSub extends Gate {
 
     @Override
     public int[] calculate() {
-        int result = 0;
+        int result;
 
-        assert inputs != null;
-        assert outputs != null;
-        assert inputSelectors != null;      // input selector acts as carry in bit.
-        assert outputSelectors != null;     // output selectors act as flags.
+        if (inputs == null) throw new AssertionError();
+        if (outputs == null) throw new AssertionError();
 
-        if (addit)
+        if (addit) {
             result = add(inputs[0] & 0xFF, inputs[1] & 0xFF);
-        else
-            result = add((inputs[0]) & 0xFF, ~inputs[1] + 1 & 0xFF);
+        }
+        else {
+            result = add((-inputs[0]) & 0xFF, inputs[1] & 0xFF);
+        }
         flags = pubFlags;
 
         outputs[0] = result & 0xFF;
-        System.out.println("Result: " + Integer.toHexString(outputs[0]));
         return outputs;
     }
 

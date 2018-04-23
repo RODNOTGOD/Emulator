@@ -9,16 +9,21 @@ package com.arch.Emulator.Gates;
 
 public class Multiplexer extends Gate {
 
-    private boolean lineState;
+    final private int READ_WRITE = 0b11;
+    final private int READ = 0b10;
+    final private int WRITE = 0b01;
+    final private int OFF = 0b00;
+
+    private int lineState;
 
     public Multiplexer(int numOfInputs) {
         super(numOfInputs, 1);
-        lineState = true;
+        lineState = 11;
     }
 
     @Override
     public int[] calculate() {
-        if (lineState) {
+        if (lineState != 0) {
             StringBuilder builder = new StringBuilder();
             String binary;
 
@@ -48,17 +53,32 @@ public class Multiplexer extends Gate {
         return (x != 0) && ((x & (x-1)) == 0);
     }
 
-    public void enabled() {
-        lineState = true;
+    public void setReadWrite() {
+        lineState = 0b11;
     }
 
-    public void disabled() {
-        lineState = false;
+    public void setWrite() {
+        lineState = 0b01;
+    }
+
+    public void setRead() {
+        lineState = 0b10;
+    }
+
+    public void setOff() {
+        lineState = 0;
     }
 
     public boolean isEnabled() {
-        return lineState;
+        return lineState != 0;
     }
 
+    public boolean canWrite() {
+        return (lineState & 0b01) == 0b01;
+    }
+
+    public boolean canRead() {
+        return (lineState & 0b10) == 0b10;
+    }
 }
 

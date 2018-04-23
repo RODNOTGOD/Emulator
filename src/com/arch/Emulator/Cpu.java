@@ -1,7 +1,6 @@
 package com.arch.Emulator;
 
 import com.arch.Emulator.Gates.*;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import java.util.*;
 
@@ -125,8 +124,8 @@ public class Cpu {
                 e.printStackTrace();
             }
 
+            System.out.println("IP: " + Integer.toHexString(instructionPointer));
             executeInstruction(opcode);
-            System.out.println(Integer.toHexString(instructionPointer));
         }
     }
 
@@ -157,7 +156,7 @@ public class Cpu {
         loadSettings(instruction);
         runInstructionSettings();
         // XXX remove this debug
-        System.out.println(dumpRegs());
+         System.out.println(dumpRegs());
     }
 
 
@@ -171,17 +170,17 @@ public class Cpu {
         switch (opcode >>> 4) {
             case 0x8: // Mov
                 // Update the IP
-                U115.setInputSelector(new int[]{1, 0});
+                U115.setInputSelector(convertToBinaryArray(2));
 
                 // What to end if enabled to registers
-                U114A.setInputSelector(convertToBinaryArray(dst));
                 U114A.enabled();
                 U114B.disabled();
 
                 // What to send to data lines
-                U118A.setInputSelector(new int[]{0, 0, 0});
-                U118B.setInputSelector(new int[]{0, 0, 0});
+                U118A.setInputSelector(convertToBinaryArray(0));
+                U118B.setInputSelector(convertToBinaryArray(0));
 
+                // Set flags
                 U120.setInputSelector(convertToBinaryArray(1));
                 break;
 
@@ -190,19 +189,19 @@ public class Cpu {
                 U120.setInputSelector(convertToBinaryArray(0));
 
                 // Update the IP
-                U115.setInputSelector(new int[]{1, 0});
+                U115.setInputSelector(convertToBinaryArray(2));
 
                 // Set the ALU
-                U111.setInputSelector(new int[]{0, 0, 0});
+                U111.setInputSelector(convertToBinaryArray(0));
 
                 // What to end if enabled to registers
-                U114A.setInputSelector(convertToBinaryArray(dst));
                 U114A.enabled();
                 U114B.disabled();
 
                 // What to send to data lines
-                U118A.setInputSelector(new int[]{0, 1, 1});
-                U118B.setInputSelector(new int[]{0, 1, 1});
+                U118A.setInputSelector(convertToBinaryArray(3));
+                U118B.setInputSelector(convertToBinaryArray(3));
+                U220.setInputSelector(convertToBinaryArray(2));
                 break;
 
             case 0x2: // Subb
@@ -210,30 +209,29 @@ public class Cpu {
                 U120.setInputSelector(convertToBinaryArray(0));
 
                 // Update the IP
-                U115.setInputSelector(new int[]{1, 0});
+                U115.setInputSelector(convertToBinaryArray(2));
 
                 // Set the ALU
-                U111.setInputSelector(new int[]{0, 0, 0});
+                U111.setInputSelector(convertToBinaryArray(0));
 
                 // What to end if enabled to registers
-                U114A.setInputSelector(convertToBinaryArray(dst));
                 U114A.enabled();
                 U114B.disabled();
 
                 // What to send to data lines
-                U118A.setInputSelector(new int[]{0, 1, 1});
-                U118B.setInputSelector(new int[]{0, 1, 1});
+                U118A.setInputSelector(convertToBinaryArray(3));
+                U118B.setInputSelector(convertToBinaryArray(3));
+                U220.setInputSelector(convertToBinaryArray(2));
                 break;
             case 0x3: // Cmp
                 U100.setSubber();
                 U120.setInputSelector(convertToBinaryArray(0));
                 // Update the IP
-                U115.setInputSelector(new int[]{1, 0});
+                U115.setInputSelector(convertToBinaryArray(2));
 
                 U111.setInputSelector(convertToBinaryArray(0));
 
                 // What to end if enabled to registers
-                U114A.setInputSelector(convertToBinaryArray(dst));
                 U114A.disabled();
                 U114B.disabled();
 
@@ -259,6 +257,7 @@ public class Cpu {
                 U118B.setInputSelector(convertToBinaryArray(3));
 
                 U120.setInputSelector(convertToBinaryArray(1));
+                U220.setInputSelector(convertToBinaryArray(2));
                 break;
             case 0x5: // And
                 // Update the IP
@@ -268,7 +267,6 @@ public class Cpu {
                 U111.setInputSelector(convertToBinaryArray(1));
 
                 // What to end if enabled to registers
-                U114A.setInputSelector(convertToBinaryArray(dst));
                 U114A.enabled();
                 U114B.disabled();
 
@@ -298,7 +296,7 @@ public class Cpu {
                 break;
             case 0x7: // Xor
                 // Update the IP
-                U115.setInputSelector(convertToBinaryArray(3));
+                U115.setInputSelector(convertToBinaryArray(2));
 
                 // Set the ALU
                 U111.setInputSelector(convertToBinaryArray(3));
@@ -315,8 +313,6 @@ public class Cpu {
                 U120.setInputSelector(convertToBinaryArray(1));
                 break;
             case 0xB: // Jmp
-                // Update the IP
-                //U115.setInputSelector(convertToBinaryArray(0));
                 // What to end if enabled to registers
                 U114A.setInputSelector(convertToBinaryArray(0));
                 U114A.disabled();
@@ -342,47 +338,19 @@ public class Cpu {
                 U118A.setInputSelector(convertToBinaryArray(3));
                 U118B.setInputSelector(convertToBinaryArray(3));
 
-                U120.setInputSelector(convertToBinaryArray(1));
+                U120.setInputSelector(convertToBinaryArray(0));
                 break;
             case 0xE: // Nop
+                U120.setInputSelector(convertToBinaryArray(0));
+                U118A.setInputSelector(convertToBinaryArray(3));
+                U118B.setInputSelector(convertToBinaryArray(3));
+                U114A.disabled();
+                U114B.disabled();
                 break;
             default:
                 throw new IllegalArgumentException("Unknown opcode " + Integer.toHexString(opcode) + " passed");
         }
     }
-
-    private void checkCondition(int modifier) {
-        U115.setInputSelector(convertToBinaryArray(3));
-        switch (modifier & 0xf) {
-            case 0x6:
-                if ((flags & 0b1) == 1) {
-                    U115.setInputSelector(convertToBinaryArray(3));
-                    System.out.println("Taking jump");
-                }
-                break;
-            case 0x7:
-                if ((flags & 0b1) == 0)
-                    U115.setInputSelector(convertToBinaryArray(3));
-                break;
-            case 0x8:
-                if ((flags >>> 3 & 0b1) == 1)
-                    U115.setInputSelector(convertToBinaryArray(3));
-                break;
-            case 0x9:
-                if ((flags >>> 3 & 0b1) == 0)
-                    U115.setInputSelector(convertToBinaryArray(3));
-                break;
-            case 0xa:
-                if ((flags >>> 1 & 0b1) == 1)
-                    U115.setInputSelector(convertToBinaryArray(3));
-                break;
-            case 0xb:
-                if ((flags >>> 1 & 0b1) == 0)
-                    U115.setInputSelector(convertToBinaryArray(3));
-                break;
-        }
-    }
-
 
     /**
      * Applies operand specific controls for data flow
@@ -404,13 +372,14 @@ public class Cpu {
                 U113.setInputSelector(convertToBinaryArray(dst));
 
                 U111.setInputSelector(convertToBinaryArray(0));
+                U220.setOff();
 
                 U114A.setInputSelector(convertToBinaryArray(dst));
                 U114A.enabled();
                 U114B.disabled();
 
-                control = new int[]{0, 0};
-                U220.setInputSelector(control);
+                U220.setInputSelector(convertToBinaryArray(0));
+                U220.setOff();
                 break;
 
             case 0x1: // Immediate to Reg
@@ -425,7 +394,7 @@ public class Cpu {
 
                 U112.setInputSelector(convertToBinaryArray(6));
 
-                U113.setInputSelector(convertToBinaryArray(6));
+                U113.setInputSelector(convertToBinaryArray(dst));
 
                 U111.setInputSelector(convertToBinaryArray(0));
 
@@ -433,16 +402,15 @@ public class Cpu {
                 U114A.enabled();
                 U114B.disabled();
 
-                control = new int[]{0, 0};
-                U220.setInputSelector(control);
-                U220.disabled();
+                U220.setInputSelector(convertToBinaryArray(0));
+                U220.setOff();
                 break;
 
             case 0x2: // Mem loc to Reg
                 dst = (instruction >>> 22) & 0b11;
                 src = (instruction >>> 4) & 0xFFFF;
 
-                U220.disabled(); // reading not writing memory
+                U220.setRead(); // reading not writing memory
                 instructionLine = src;
 
                 U115.setInputSelector(convertToBinaryArray(2));
@@ -463,19 +431,19 @@ public class Cpu {
                 U115.setInputSelector(convertToBinaryArray(2));
                 U116.setInputSelector(convertToBinaryArray(2));
                 U112.setInputSelector(convertToBinaryArray(src));
-                U113.setInputSelector(convertToBinaryArray(6));
+                U113.setInputSelector(convertToBinaryArray(4));
                 U111.setInputSelector(convertToBinaryArray(0));
 
                 U114A.disabled();
                 U114B.disabled();
 
                 U220.setInputSelector(convertToBinaryArray(0));
-                U220.enabled();
+                U220.setReadWrite();
                 break;
 
             case 0x8:
-                dst = (instruction >>> 16) & 0xC;
-                src = (instruction >>> 16) & 0x3;
+                dst = (instruction >>> 22) & 0b11;
+                src = (instruction >>> 18) & 0b11;
 
                 U115.setInputSelector(convertToBinaryArray(0));
                 U116.setInputSelector(convertToBinaryArray(2));
@@ -487,7 +455,7 @@ public class Cpu {
                 U114B.disabled();
 
                 U220.setInputSelector(convertToBinaryArray(0));
-                U220.disabled();
+                U220.setOff();
                 break;
 
             case 0x9:
@@ -507,7 +475,7 @@ public class Cpu {
                 U114B.disabled();
 
                 U220.setInputSelector(convertToBinaryArray(0));
-                U220.disabled();
+                U220.setOff();
                 break;
         }
     }
@@ -553,7 +521,7 @@ public class Cpu {
         // And
         input = new int []{U112.transmit()[0], U113.transmit()[0]};
         U101.loadArguments(input);
-        U100.calculate();
+        U101.calculate();
 
         // Or
         input = new int []{U112.transmit()[0], U113.transmit()[0]};
@@ -577,7 +545,6 @@ public class Cpu {
 
         U120.loadArguments(new int[]{U100.getFlags(), ALU});
         flags = U120.calculate()[0] & 0xF;
-        System.out.println("Flags: " + Integer.toBinaryString(flags));
 
         input = new int []{dataline8, stackPointer, dst, ALU, 0, memoryline, 0, 0};
         U118A.loadArguments(input);
@@ -607,7 +574,7 @@ public class Cpu {
      *
      */
     private void writeMemory() {
-        if (U220.isEnabled()) {
+        if (U220.canWrite()) {
             try {
                 memory.write(U116.transmit()[0], U220.transmit()[0]);
             } catch (IllegalAccessException e) {
@@ -618,7 +585,8 @@ public class Cpu {
 
 
     /**
-     *
+     * Writes to registers if the enable line was asserted
+     * for the specific line
      */
     private void writeRegisters() {
         switch (dst) {
@@ -651,13 +619,16 @@ public class Cpu {
 
 
     /**
+     * Reads only if the write line was asserted low
      *
-     * @return
+     * if low then returns the read at the specific memory location
+     *
+     * @return data specified memory location
      */
     private int readMemory() {
         int memRead = 0;
         // Only write or read mode not both
-        if (!U220.isEnabled()) {
+        if (U220.canRead()) {
             try {
                 // Read memory address specified by U116
                 memRead = memory.fetch(U116.transmit()[0]);
@@ -666,6 +637,37 @@ public class Cpu {
             }
         }
         return memRead;
+    }
+
+
+    private void checkCondition(int modifier) {
+        U115.setInputSelector(convertToBinaryArray(2));
+        switch (modifier & 0xf) {
+            case 0x6:
+                if ((flags & 0b1) == 1)
+                    U115.setInputSelector(convertToBinaryArray(3));
+                break;
+            case 0x7:
+                if ((flags & 0b1) == 0)
+                    U115.setInputSelector(convertToBinaryArray(3));
+                break;
+            case 0x8:
+                if ((flags >>> 3 & 0b1) == 1)
+                    U115.setInputSelector(convertToBinaryArray(3));
+                break;
+            case 0x9:
+                if ((flags >>> 3 & 0b1) == 0)
+                    U115.setInputSelector(convertToBinaryArray(3));
+                break;
+            case 0xa:
+                if ((flags >>> 1 & 0b1) == 1)
+                    U115.setInputSelector(convertToBinaryArray(3));
+                break;
+            case 0xb:
+                if ((flags >>> 1 & 0b1) == 0)
+                    U115.setInputSelector(convertToBinaryArray(3));
+                break;
+        }
     }
 
 
