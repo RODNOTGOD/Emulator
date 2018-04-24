@@ -13,7 +13,7 @@ public abstract class Gate {
     }
 
     /**
-     * Gets the output of the of the gate
+     * Gets the output of the gate
      *
      * @return the calculated output of the gate
      */
@@ -23,7 +23,7 @@ public abstract class Gate {
 
     /**
      * Loads all argument into the gate as inputs
-     * and sets them to calculated by the gat
+     * and sets them to calculated by the gate
      *
      * @param inputs wire inputs to the gate
      */
