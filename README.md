@@ -10,17 +10,17 @@
   - [x] Decoder
   - [x] NOT
   - [x] AND
-  - [x] OR
-  - [x] XOR
+  - [ ] OR
+  - [ ] XOR
 
 ### Week 2 ###
 
   Start focusing all major components of the CPU. And finalizing the connection
   of the basic chips.
 
-  - [x] Registers(1,2,3,4,5,6,7,8)
+  - [ ] Registers(1,2,3,4,5,6,7,8)
   - [x] Stack pointer
-  - [x] Instruction pointer
+  - [ ] Instruction pointer
   - [x] mux/demux
 
 ### Week 3 ###

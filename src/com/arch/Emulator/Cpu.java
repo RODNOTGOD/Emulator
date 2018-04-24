@@ -58,24 +58,24 @@ public class Cpu {
 
     public Cpu() {
         flags = 0b000;
-        U10 = new Register();
-        U11 = new Register();
-        U12 = new Register();
-        U13 = new Register();
+        U10 = new Register();   // Reg 0
+        U11 = new Register();   // Reg 1
+        U12 = new Register();   // Reg 2
+        U13 = new Register();   // Reg 3
 
-        U111 = new Multiplexer(8);
-        U112 = new Multiplexer(8);
-        U113 = new Multiplexer(8);
-        U115 = new Multiplexer(4);
-        U116 = new Multiplexer(4);
-        U117 = new Multiplexer(2);
-        U118A = new Multiplexer(8);
-        U118B = new Multiplexer(8);
-        U120 = new Multiplexer(2);
-        U220 = new Multiplexer(4);
+        U111 = new Multiplexer(8);  // 8-1 Mux after ALU
+        U112 = new Multiplexer(8);  // 8-1 Mux after registers
+        U113 = new Multiplexer(8);  // 8-1 Mux after registers
+        U115 = new Multiplexer(4);  // 4-1 Mux before IP
+        U116 = new Multiplexer(4);  // 4-1 Mux into mem
+        U117 = new Multiplexer(2);  // 2-1 Mux before SP
+        U118A = new Multiplexer(8); // 8-1 Mux from lines
+        U118B = new Multiplexer(8); // 8-1 Mux from lines
+        U120 = new Multiplexer(2);  // 2-1 Mux to flags
+        U220 = new Multiplexer(4);  // 4-1 Mux from lines to mem
 
-        U114A = new Demultiplexer(1);
-        U114B = new Demultiplexer(1);
+        U114A = new Demultiplexer(1);   // "2-4" demux to registers
+        U114B = new Demultiplexer(1);   // "2-4" demux to registers
 
         U100 = new AddSub();
         U101 = new And();
@@ -124,8 +124,10 @@ public class Cpu {
                 e.printStackTrace();
             }
 
-            System.out.println("IP: " + Integer.toHexString(instructionPointer));
             executeInstruction(opcode);
+            int opcPrint = opcode << 4;
+            //System.out.println("opcode: " + Integer.toHexString(opcPrint));
+            System.out.println("IP: "+ Integer.toHexString(instructionPointer));
         }
     }
 
@@ -156,7 +158,7 @@ public class Cpu {
         loadSettings(instruction);
         runInstructionSettings();
         // XXX remove this debug
-         System.out.println(dumpRegs());
+        System.out.println(dumpRegs());
     }
 
 
@@ -351,6 +353,7 @@ public class Cpu {
                 throw new IllegalArgumentException("Unknown opcode " + Integer.toHexString(opcode) + " passed");
         }
     }
+
 
     /**
      * Applies operand specific controls for data flow
