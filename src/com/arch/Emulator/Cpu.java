@@ -21,6 +21,7 @@ public class Cpu {
     // All used integers
     // ZERO, OVERFLOW, N, CARRY
     private int flags;
+    private int clock;
 
     private int instructionPointer;
     private int stackPointer;
@@ -109,6 +110,8 @@ public class Cpu {
         U11.setData(random.nextInt(0xFF));
         U12.setData(random.nextInt(0xFF));
         U13.setData(random.nextInt(0xFF));
+
+        clock = 0;
     }
 
 
@@ -128,6 +131,7 @@ public class Cpu {
             }
 
             System.out.println("________________________________\n");
+            System.out.println("CLOCK: " + clock++);
             System.out.println("IP: "+ Integer.toHexString(instructionPointer));
             executeInstruction(opcode);
         }
