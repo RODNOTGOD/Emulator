@@ -6,6 +6,9 @@ import java.util.*;
 
 public class Cpu {
 
+    // Global printer
+    StringBuilder sb;
+
     // Main Memory -> ram
     private Memory memory;
 
@@ -124,10 +127,9 @@ public class Cpu {
                 e.printStackTrace();
             }
 
-            executeInstruction(opcode);
-            int opcPrint = opcode << 4;
-            //System.out.println("opcode: " + Integer.toHexString(opcPrint));
+            System.out.println("________________________________\n");
             System.out.println("IP: "+ Integer.toHexString(instructionPointer));
+            executeInstruction(opcode);
         }
     }
 
@@ -155,9 +157,12 @@ public class Cpu {
      * @param instruction opcode to execute
      */
     private void executeInstruction(int instruction) {
+        sb = new StringBuilder();
+        System.out.println("OPCODE: " + Integer.toHexString(instruction));
         loadSettings(instruction);
         runInstructionSettings();
         // XXX remove this debug
+        System.out.println(sb.toString());
         System.out.println(dumpRegs());
     }
 
@@ -171,6 +176,7 @@ public class Cpu {
         applyModifer(opcode, fullOpcode);
         switch (opcode >>> 4) {
             case 0x8: // Mov
+                sb.insert(0, "mov ");
                 // Update the IP
                 U115.setInputSelector(convertToBinaryArray(2));
 
@@ -187,6 +193,7 @@ public class Cpu {
                 break;
 
             case 0x1: // Addc
+                sb.insert(0, "addc ");
                 U100.setAdder();
                 U120.setInputSelector(convertToBinaryArray(0));
 
@@ -207,6 +214,7 @@ public class Cpu {
                 break;
 
             case 0x2: // Subb
+                sb.insert(0, "subb ");
                 U100.setSubber();
                 U120.setInputSelector(convertToBinaryArray(0));
 
@@ -226,6 +234,7 @@ public class Cpu {
                 U220.setInputSelector(convertToBinaryArray(2));
                 break;
             case 0x3: // Cmp
+                sb.insert(0, "cmp ");
                 U100.setSubber();
                 U120.setInputSelector(convertToBinaryArray(0));
                 // Update the IP
@@ -243,6 +252,7 @@ public class Cpu {
                 U120.setInputSelector(convertToBinaryArray(0));
                 break;
             case 0x4: // Not
+                sb.insert(0, "not ");
                 // Update the IP
                 U115.setInputSelector(convertToBinaryArray(2));
 
@@ -262,6 +272,7 @@ public class Cpu {
                 U220.setInputSelector(convertToBinaryArray(2));
                 break;
             case 0x5: // And
+                sb.insert(0, "and ");
                 // Update the IP
                 U115.setInputSelector(convertToBinaryArray(2));
 
@@ -279,6 +290,7 @@ public class Cpu {
                 U120.setInputSelector(convertToBinaryArray(1));
                 break;
             case 0x6: // Or
+                sb.insert(0, "or ");
                 // Update the IP
                 U115.setInputSelector(convertToBinaryArray(2));
 
@@ -297,6 +309,7 @@ public class Cpu {
                 U120.setInputSelector(convertToBinaryArray(1));
                 break;
             case 0x7: // Xor
+                sb.insert(0, "xor ");
                 // Update the IP
                 U115.setInputSelector(convertToBinaryArray(2));
 
@@ -315,6 +328,7 @@ public class Cpu {
                 U120.setInputSelector(convertToBinaryArray(1));
                 break;
             case 0xB: // Jmp
+                sb.insert(0, "jmp ");
                 // What to end if enabled to registers
                 U114A.setInputSelector(convertToBinaryArray(0));
                 U114A.disabled();
@@ -343,6 +357,7 @@ public class Cpu {
                 U120.setInputSelector(convertToBinaryArray(0));
                 break;
             case 0xE: // Nop
+                sb.insert(0, "nop ");
                 U120.setInputSelector(convertToBinaryArray(0));
                 U118A.setInputSelector(convertToBinaryArray(3));
                 U118B.setInputSelector(convertToBinaryArray(3));
@@ -367,6 +382,7 @@ public class Cpu {
             case 0x0: // Reg to Reg
                 dst = (instruction >>> 22) & 0b11;
                 src = (instruction >>> 18) & 0b11;
+                sb.append("R" + dst + ", R" + src + "\n");
 
                 U115.setInputSelector(convertToBinaryArray(2));
                 U116.setInputSelector(convertToBinaryArray(2));
@@ -390,6 +406,7 @@ public class Cpu {
                 src = (instruction >>> 12) & 0xFF;
 
                 instructionLine = src;
+                sb.append("R" + dst + ", $" + Integer.toHexString(instructionLine) + "\n");
 
                 U115.setInputSelector(convertToBinaryArray(2));
 
@@ -402,7 +419,7 @@ public class Cpu {
                 U111.setInputSelector(convertToBinaryArray(0));
 
                 U114A.setInputSelector(convertToBinaryArray(dst));
-                U114A.enabled();
+
                 U114B.disabled();
 
                 U220.setInputSelector(convertToBinaryArray(0));
@@ -415,6 +432,8 @@ public class Cpu {
 
                 U220.setRead(); // reading not writing memory
                 instructionLine = src;
+
+                sb.append("R" + dst + ", [$" + Integer.toHexString(instructionLine) + "]" + "\n");
 
                 U115.setInputSelector(convertToBinaryArray(2));
                 U116.setInputSelector(convertToBinaryArray(2));
@@ -430,6 +449,8 @@ public class Cpu {
                 dst = (instruction >>> 8) & 0xFFFF;
                 src = (instruction >>> 6) & 0b11;
                 instructionLine = dst;
+
+                sb.append("[$" + Integer.toHexString(instructionLine) + "], " + "R" + src + "\n");
 
                 U115.setInputSelector(convertToBinaryArray(2));
                 U116.setInputSelector(convertToBinaryArray(2));
@@ -647,26 +668,32 @@ public class Cpu {
         U115.setInputSelector(convertToBinaryArray(2));
         switch (modifier & 0xf) {
             case 0x6:
+                sb.append("jlo " + Integer.toHexString(dst) + Integer.toHexString(src));
                 if ((flags & 0b1) == 1)
                     U115.setInputSelector(convertToBinaryArray(3));
                 break;
             case 0x7:
+                sb.append("jhi " + Integer.toHexString(dst) + Integer.toHexString(src));
                 if ((flags & 0b1) == 0)
                     U115.setInputSelector(convertToBinaryArray(3));
                 break;
             case 0x8:
+                sb.append("jeq " + Integer.toHexString(dst) + Integer.toHexString(src));
                 if ((flags >>> 3 & 0b1) == 1)
                     U115.setInputSelector(convertToBinaryArray(3));
                 break;
             case 0x9:
+                sb.append("jne " + Integer.toHexString(dst) + Integer.toHexString(src));
                 if ((flags >>> 3 & 0b1) == 0)
                     U115.setInputSelector(convertToBinaryArray(3));
                 break;
             case 0xa:
+                sb.append("jmi " + Integer.toHexString(dst) + Integer.toHexString(src));
                 if ((flags >>> 1 & 0b1) == 1)
                     U115.setInputSelector(convertToBinaryArray(3));
                 break;
             case 0xb:
+                sb.append("jpl " + Integer.toHexString(dst) + Integer.toHexString(src));
                 if ((flags >>> 1 & 0b1) == 0)
                     U115.setInputSelector(convertToBinaryArray(3));
                 break;
